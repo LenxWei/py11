@@ -29,6 +29,7 @@ class py_iter;
 /** wrapper of PyObject.
  */
 class pyo{
+friend pyo py_list(std::initializer_list<pyo> l);
 protected:
     PyObject* _p;
 
@@ -109,10 +110,19 @@ public:
     pyo(const char* s):_p(PyString_FromString(s))
     {}
 
-    /** int.
+    /** long. please use 0L to avoid silly type confusing of compilers
      */
-    pyo(int i):_p(PyInt_FromLong(i))
+    pyo(long i):_p(PyInt_FromLong(i))
     {}
+    
+    long as_long()const
+    {
+        long r = PyInt_AsLong(_p);
+        if(PyErr_Occurred() != NULL){
+            throw std::invalid_argument("py as_long failed");
+        }
+        return r;
+    }
     
     /** tuple.
      */
@@ -496,6 +506,31 @@ inline pyo py_import(const char* module_name)
     if(p == NULL)
         throw std::invalid_argument("py import () failed");
     return p;
+}
+
+/** py list.
+ */
+inline pyo py_list(std::initializer_list<pyo> l)
+{
+    pyo o = PyList_New(l.size());
+    long i = 0;
+    for(auto &x: l){
+        PyList_SET_ITEM(o.p(), i++, x.p());
+        x.__reset();
+    }
+    return o;
+}
+
+inline pyo py_listcast(const pyo& o)
+{
+    
+}
+
+/** len.
+ */
+inline long len(const pyo& o)
+{
+    return PySequence_Size(o.p());
 }
 
 // implementation

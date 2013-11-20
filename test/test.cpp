@@ -14,21 +14,28 @@ int main(int argc, char** argv)
 
     // call/output
     auto s = time();
-    cout << s << endl;
-    
-    // for iter
-    for(auto &x: s.dir()){
-        cout << x << "\n";
-    }
+    cout << s << ":" << s.dir() << endl;
     
     // tuple
-    pyo y = {"abc",221};
-    cout << y << endl;
+    pyo y = {"abc", 2, 0L, 1, 3};
+    cout << y << ":" << len(y) << endl;
     
     for(auto &x: y){
         cout << x.refcnt() << endl;
     }
     
+    // list
+    {
+        pyo l = py_list({{0L, "abc"}, 22});
+        cout << l << endl;
+        for(auto &x: l){
+            cout << x.refcnt() << endl;
+        }
+        l.attr("sort")();
+        cout << l << endl;
+    }
+    
+    // ref count
     pyo z = y[1];
     
     for(auto &x: y){
@@ -36,5 +43,7 @@ int main(int argc, char** argv)
     }
     y=nullptr;
     cout << z.refcnt() << endl;
+    
+    
     py_fini();
 }
