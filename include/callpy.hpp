@@ -4,12 +4,56 @@
 #include <stdexcept>
 #include <initializer_list>
 
-namespace callpy {
+namespace py {
+
+/** exception: err.
+ */
+class err: public std::exception{
+protected:
+    const char* _what;
+public:
+    err():_what(NULL)
+    {}
+    
+    err(const char* what):_what(what)
+    {}
+    
+    virtual const char* what()const noexcept
+    {
+        return _what;
+    }
+};
+
+
+/** exception: index_err.
+ */
+class index_err: public err{
+public:
+    index_err(const char* what):err(what)
+    {}
+};
+
+/** exception: type_err.
+ */
+class type_err: public err{
+public:
+    type_err(const char* what):err(what)
+    {}
+};
+
+/** exception: val_err.
+ */
+class val_err: public err{
+public:
+    val_err(const char* what):err(what)
+    {}
+};
+
 
 /** init the py lib
  * @param program_name usually use argv[0]
  */
-inline void py_init(char* program_name = NULL)
+inline void init(char* program_name = NULL)
 {
     if(program_name){
         Py_SetProgramName(program_name);
@@ -19,24 +63,24 @@ inline void py_init(char* program_name = NULL)
 
 /** finalize the py lib
  */
-inline void py_fini()
+inline void fini()
 {
     Py_Finalize();
 }
 
-class py_iter;
+class iter;
 
 /** wrapper of PyObject.
  */
-class pyo{
-friend pyo py_list(std::initializer_list<pyo> l);
+class obj{
+friend obj list(std::initializer_list<obj> l);
 protected:
     PyObject* _p;
 
     void __reset()const
     {
         // only for stolen references
-        const_cast<pyo&>(*this)._p = NULL;
+        const_cast<obj&>(*this)._p = NULL;
     }
     
     void enter(PyObject* p)
@@ -51,31 +95,23 @@ protected:
             Py_INCREF(_p);
     }
         
-    void release()
-    {
-        if(_p){
-            Py_DECREF(_p);
-            _p = NULL;
-        }
-    }
-    
 public:
-    pyo():_p(NULL)
+    obj():_p(NULL)
     {}
     
     /** copy ctor.
      */
-    pyo(const pyo& o):_p(o._p)
+    obj(const obj& o):_p(o._p)
     {
         __enter();
     }
     
-    pyo(pyo& o):_p(o._p)
+    obj(obj& o):_p(o._p)
     {
         __enter();
     }
     
-    pyo& operator=(const pyo& o)
+    obj& operator=(const obj& o)
     {
         if(o._p!=_p){
             release();
@@ -86,10 +122,10 @@ public:
 
     /** create from Py functions, need not to inc ref
      */
-    pyo(PyObject* p):_p(p)
+    obj(PyObject* p):_p(p)
     {}
     
-    pyo& operator=(PyObject* p)
+    obj& operator=(PyObject* p)
     {
         if(p!=_p){
             release();
@@ -100,33 +136,33 @@ public:
     
     /** move ctor.
      */
-    pyo(pyo&& o)noexcept:_p(o._p)
+    obj(obj&& o)noexcept:_p(o._p)
     {
         o._p = NULL;
     }
 
     /** str.
      */    
-    pyo(const char* s):_p(PyString_FromString(s))
+    obj(const char* s):_p(PyString_FromString(s))
     {}
 
     /** long. please use 0L to avoid silly type confusing of compilers
      */
-    pyo(long i):_p(PyInt_FromLong(i))
+    obj(long i):_p(PyInt_FromLong(i))
     {}
     
     long as_long()const
     {
         long r = PyInt_AsLong(_p);
         if(PyErr_Occurred() != NULL){
-            throw std::invalid_argument("py as_long failed");
+            throw type_err("py as_long failed");
         }
         return r;
     }
     
     /** tuple.
      */
-    pyo(std::initializer_list<pyo> l):_p(PyTuple_New(l.size()))
+    obj(std::initializer_list<obj> l):_p(PyTuple_New(l.size()))
     {
         long i = 0;
         for(auto &x: l){
@@ -137,11 +173,21 @@ public:
     
     /** dtor.
      */
-    ~pyo()
+    ~obj()
     {
         release();
     }
 
+    /** release the contained object
+     */
+    void release()
+    {
+        if(_p){
+            Py_DECREF(_p);
+            _p = NULL;
+        }
+    }
+    
     /** test null.
      */
     bool is_null()const
@@ -165,7 +211,7 @@ public:
     
     /** has attr.
      */
-    bool has_attr(const pyo& o)const
+    bool has_attr(const obj& o)const
     {
         return PyObject_HasAttr(_p, o._p);
     }
@@ -179,51 +225,62 @@ public:
 
     /** get attr.
      */
-    pyo attr(const pyo& o)const
+    obj attr(const obj& o)const
     {
         PyObject* p = PyObject_GetAttr(_p, o._p);
         if(!p){
-            throw std::out_of_range("non-existing py attr");
+            throw index_err("non-existing py attr");
         }
         return p;
     }
 
     /** get attr.
      */
-    pyo attr(const char* s)const
+    obj attr(const char* s)const
     {
         PyObject* p = PyObject_GetAttrString(_p, s);
         if(!p){
-            throw std::out_of_range("non-existing py attr");
+            throw index_err("non-existing py attr");
+        }
+        return p;
+    }
+
+    /** get attr, short form.
+     */
+    obj a(const char* s)const
+    {
+        PyObject* p = PyObject_GetAttrString(_p, s);
+        if(!p){
+            throw index_err("non-existing py attr");
         }
         return p;
     }
 
     /** set attr.
      */
-    void set_attr(const pyo& a, const pyo& v)const
+    void set_attr(const obj& a, const obj& v)const
     {
         int r = PyObject_SetAttr(_p, a._p, v._p);
         if(r == -1)
-            throw std::invalid_argument("py set_attr failed");
+            throw index_err("py set_attr failed");
     }
 
     /** set attr.
      */
-    void set_attr(const char* a, const pyo& v)const
+    void set_attr(const char* a, const obj& v)const
     {
         int r = PyObject_SetAttrString(_p, a, v._p);
         if(r == -1)
-            throw std::invalid_argument("py set_attr failed");
+            throw index_err("py set_attr failed");
     }
 
     /** del attr.
      */
-    void del_attr(const pyo& a)const
+    void del_attr(const obj& a)const
     {
         int r = PyObject_DelAttr(_p, a._p);
         if(r == -1)
-            throw std::invalid_argument("py del_attr failed");
+            throw index_err("py del_attr failed");
     }
 
     /** del attr.
@@ -232,12 +289,12 @@ public:
     {
         int r = PyObject_DelAttrString(_p, a);
         if(r == -1)
-            throw std::invalid_argument("py del_attr failed");
+            throw index_err("py del_attr failed");
     }
 
     /** comparison.
      */
-    bool operator < (const pyo& o)const
+    bool operator < (const obj& o)const
     {
         if(_p == o._p)
             return false;
@@ -247,12 +304,12 @@ public:
             return false;
         int r = PyObject_RichCompareBool(_p, o._p, Py_LT);
         if(r == -1){
-            throw std::invalid_argument("py < failed");
+            throw val_err("py < failed");
         }
         return r;
     }
     
-    bool operator <= (const pyo& o)const
+    bool operator <= (const obj& o)const
     {
         if(_p == o._p)
             return true;
@@ -262,12 +319,12 @@ public:
             return false;
         int r = PyObject_RichCompareBool(_p, o._p, Py_LE);
         if(r == -1){
-            throw std::invalid_argument("py <= failed");
+            throw val_err("py <= failed");
         }
         return r;
     }
     
-    bool operator == (const pyo& o)const
+    bool operator == (const obj& o)const
     {
         if(_p == o._p)
             return true;
@@ -277,12 +334,12 @@ public:
             return false;
         int r = PyObject_RichCompareBool(_p, o._p, Py_EQ);
         if(r == -1){
-            throw std::invalid_argument("py == failed");
+            throw val_err("py == failed");
         }
         return r;
     }
     
-    bool operator != (const pyo& o)const
+    bool operator != (const obj& o)const
     {
         if(_p == o._p)
             return false;
@@ -292,12 +349,12 @@ public:
             return true;
         int r = PyObject_RichCompareBool(_p, o._p, Py_NE);
         if(r == -1){
-            throw std::invalid_argument("py != failed");
+            throw val_err("py != failed");
         }
         return r;
     }
     
-    bool operator > (const pyo& o)const
+    bool operator > (const obj& o)const
     {
         if(_p == o._p)
             return false;
@@ -307,12 +364,12 @@ public:
             return true;
         int r = PyObject_RichCompareBool(_p, o._p, Py_GT);
         if(r == -1){
-            throw std::invalid_argument("py > failed");
+            throw val_err("py > failed");
         }
         return r;
     }
     
-    bool operator >= (const pyo& o)const
+    bool operator >= (const obj& o)const
     {
         if(_p == o._p)
             return true;
@@ -322,80 +379,80 @@ public:
             return true;
         int r = PyObject_RichCompareBool(_p, o._p, Py_GE);
         if(r == -1){
-            throw std::invalid_argument("py >= failed");
+            throw val_err("py >= failed");
         }
         return r;
     }
     
     /** repr.
      */
-    pyo repr()const
+    obj repr()const
     {
         PyObject* p = PyObject_Repr(_p);
         if(p == NULL)
-            throw std::logic_error("py repr failed");
+            throw val_err("py repr failed");
         return p;
     }
     
     /** str.
      */
-    pyo str()const
+    obj str()const
     {
         PyObject* p = PyObject_Str(_p);
         if(p == NULL)
-            throw std::logic_error("py str failed");
+            throw val_err("py str failed");
         return p;
     }
     
     /** unicode.
      */
-    pyo unicode()const
+    obj unicode()const
     {
         PyObject* p = PyObject_Unicode(_p);
         if(p == NULL)
-            throw std::logic_error("py unicode failed");
+            throw val_err("py unicode failed");
         return p;
     }
     
-    bool is_a(const pyo& cls)const
+    bool is_a(const obj& cls)const
     {
         int r = PyObject_IsInstance(_p, cls._p);
         if(r == -1)
-            throw std::invalid_argument("py is_a failed");
+            throw val_err("py is_a failed");
         return r;
     }
     
-    template<typename ...argT>pyo operator ()(argT&& ...a)const
+    template<typename ...argT>obj operator ()(argT&& ...a)const
     {
-        PyObject* r = PyObject_CallFunctionObjArgs(_p, pyo(a).p()..., NULL);
+        PyObject* r = PyObject_CallFunctionObjArgs(_p, obj(a).p()..., NULL);
         if(r == NULL)
-            throw std::invalid_argument("py operator() failed");
+            throw type_err("py operator() failed");
         return r;
     }
 
-    pyo call(const pyo& args, const pyo& kw)const
+    obj call(const obj& args, const obj& kw)const
     {
         PyObject* r = PyObject_Call(_p, args._p, kw._p);
         if(r == NULL)
-            throw std::invalid_argument("py call failed");
+            throw type_err("py call failed");
         return r;
     }
     
     /** get item.
      */
-    pyo operator [](const pyo& o)const
+    obj operator [](const obj& o)const
     {
         PyObject* p = PyObject_GetItem(_p, o._p);
         if(!p){
-            throw std::out_of_range("non-existing py attr");
+            throw index_err("non-existing py attr");
         }
         return p;    
     }
     
     /** get iter.
      */
-    inline py_iter begin()const;
-    inline py_iter end()const;
+    inline iter begin()const;
+    inline iter end()const;
     
     /** c_str().
      */
@@ -403,7 +460,7 @@ public:
     {
         const char* p = PyString_AsString(_p);
         if(!p)
-            throw std::invalid_argument("py c_str failed");
+            throw type_err("py c_str failed");
         
         return p;
     }
@@ -426,14 +483,34 @@ public:
     
     /** py object dir.
      */
-    pyo dir()const
+    obj dir()const
     {
         PyObject* p = PyObject_Dir(_p);
         if(!p)
-            throw std::logic_error("py dir failed");
+            throw val_err("py dir failed");
         return p;
     }
    
+    /** len.
+     */
+    long size()const
+    {
+        long r = PySequence_Size(p());
+        if(r == -1)
+            throw type_err("len failed");
+        return r;
+    }
+
+    bool has(const obj& x)const
+    {
+        int r = PySequence_Contains(p(), x.p());
+        if(r == -1)
+            throw type_err("has failed");
+        return r;
+    }
+
+    /** refcnt.
+     */
     Py_ssize_t refcnt()const
     {
         if(_p)
@@ -445,27 +522,27 @@ public:
 
 /** iter for the c++11 range loop.
  */
-class py_iter{
+class iter{
 private:
-    pyo _it;
-    pyo _v;
+    obj _it;
+    obj _v;
     bool _fin;
 public:
-    py_iter():_fin(true)
+    iter():_fin(true)
     {}
     
-    py_iter(const pyo& o):_it(PyObject_GetIter(o.p())), _fin(false)
+    iter(const obj& o):_it(PyObject_GetIter(o.p())), _fin(false)
     {
         if(_it.is_null())
-            throw std::invalid_argument("py_iter ctor failed");
+            throw type_err("iter ctor failed");
         ++(*this);
     }
     
     /** operator ++.
      */
-    py_iter& operator++()
+    iter& operator++()
     {
-        _v = pyo(PyIter_Next(_it.p()));
+        _v = obj(PyIter_Next(_it.p()));
         if(_v.is_null())
             _fin = true;
         return *this;
@@ -473,17 +550,17 @@ public:
     
     /** operator *.
      */
-    pyo& operator*()
+    obj& operator*()
     {
         return _v;
     }
     
-    bool operator==(const py_iter& i)const
+    bool operator==(const iter& i)const
     {
         return (i._it == _it) || (i._fin && _fin);
     }
 
-    bool operator!=(const py_iter& i)const
+    bool operator!=(const iter& i)const
     {
         return !(*this == i);
     }
@@ -492,7 +569,7 @@ public:
 
 /** ostream output
  */
-inline std::ostream& operator <<(std::ostream& s, const pyo& o)
+inline std::ostream& operator <<(std::ostream& s, const obj& o)
 {
     o.output(s);
     return s;
@@ -500,19 +577,19 @@ inline std::ostream& operator <<(std::ostream& s, const pyo& o)
 
 /** py import.
  */
-inline pyo py_import(const char* module_name)
+inline obj import(const char* module_name)
 {
     PyObject* p = PyImport_ImportModule(module_name);
     if(p == NULL)
-        throw std::invalid_argument("py import () failed");
+        throw val_err("py import () failed");
     return p;
 }
 
 /** py list.
  */
-inline pyo py_list(std::initializer_list<pyo> l)
+inline obj list(std::initializer_list<obj> l)
 {
-    pyo o = PyList_New(l.size());
+    obj o = PyList_New(l.size());
     long i = 0;
     for(auto &x: l){
         PyList_SET_ITEM(o.p(), i++, x.p());
@@ -521,28 +598,21 @@ inline pyo py_list(std::initializer_list<pyo> l)
     return o;
 }
 
-inline pyo py_listcast(const pyo& o)
+inline obj list_cast(const obj& o)
 {
     
 }
 
-/** len.
- */
-inline long len(const pyo& o)
-{
-    return PySequence_Size(o.p());
-}
-
 // implementation
 
-inline py_iter pyo::end()const
+inline iter obj::end()const
 {
-    return py_iter();
+    return iter();
 }
 
-inline py_iter pyo::begin()const
+inline iter obj::begin()const
 {
-    return py_iter(*this);
+    return iter(*this);
 }
 
-}; // ns callpy
+}; // ns py

@@ -2,14 +2,13 @@
 #include <iostream>
 
 using namespace std;
-using namespace callpy;
 
 int main(int argc, char** argv)
 {
-    py_init(argv[0]);
+    py::init(argv[0]);
     
     // import
-    auto t = py_import("time");
+    auto t = py::import("time");
     auto time = t.attr("ctime");
 
     // call/output
@@ -17,33 +16,40 @@ int main(int argc, char** argv)
     cout << s << ":" << s.dir() << endl;
     
     // tuple
-    pyo y = {"abc", 2, 0L, 1, 3};
-    cout << y << ":" << len(y) << endl;
+    py::obj y = {"abc", 2, 0L, 1, 3};
+    cout << y << ":" << y.size() << endl;
     
-    for(auto &x: y){
-        cout << x.refcnt() << endl;
+    try{
+        cout << y[1].size() << endl;
     }
+    catch(const py::type_err& e){
+        cout << "caught: " << e.what() << endl;
+    }
+    
     
     // list
     {
-        pyo l = py_list({{0L, "abc"}, 22});
+        py::obj l = py::list({{0L, "abc"}, 22});
         cout << l << endl;
         for(auto &x: l){
             cout << x.refcnt() << endl;
         }
-        l.attr("sort")();
-        cout << l << endl;
+        l.a("sort")();
+        cout << "sorted: " << l << endl;
+        
+        cout << "22 in l: " << l.has(22) << endl;
     }
     
     // ref count
-    pyo z = y[1];
+    py::obj z = y[1];
+    int refcnt = z.refcnt();
+    py::obj z1 = y[1];
     
-    for(auto &x: y){
-        cout << x.refcnt() << endl;
-    }
-    y=nullptr;
-    cout << z.refcnt() << endl;
-    
-    
-    py_fini();
+    assert( z1.refcnt() == refcnt + 1);
+    y.release();
+    assert( z1.refcnt() == refcnt);
+    z.release();
+    assert( z1.refcnt() == refcnt - 1);
+        
+    py::fini();
 }
