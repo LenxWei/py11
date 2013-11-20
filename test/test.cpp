@@ -9,16 +9,21 @@ int main(int argc, char** argv)
     
     // import
     auto t = py::import("time");
-    auto time = t.attr("ctime");
+    auto time = t.attr("time");
 
     // call/output
     auto s = time();
-    cout << s << ":" << s.dir() << endl;
+    cout << s.as_double() << ":" << s << endl;
     
+    // consts
+    cout << "True: " << py::obj(py::True) << endl;
+        
     // tuple
     py::obj y = {"abc", 2, 0L, 1, 3};
     cout << y << ":" << y.size() << endl;
     
+    cout << y.type() << endl;
+    cout << py::obj().type() << endl;
     try{
         cout << y[1].size() << endl;
     }
@@ -29,7 +34,7 @@ int main(int argc, char** argv)
     
     // list
     {
-        py::obj l = py::list({{0L, "abc"}, 22});
+        py::obj l = py::list({{0, "abc"}, 22});
         cout << l << endl;
         for(auto &x: l){
             cout << x.refcnt() << endl;

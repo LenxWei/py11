@@ -3,6 +3,7 @@
 #include <exception>
 #include <stdexcept>
 #include <initializer_list>
+#include <limits>
 
 namespace py {
 
@@ -70,6 +71,12 @@ inline void fini()
 
 class iter;
 
+enum const_type {
+    False = 0,
+    True = 1,
+    None = 2,
+};
+
 /** wrapper of PyObject.
  */
 class obj{
@@ -98,6 +105,13 @@ protected:
 public:
     obj():_p(NULL)
     {}
+    
+    obj(const_type i):_p(NULL)
+    {
+        static PyObject* c[] = {Py_False, Py_True, Py_None};
+        _p = c[i];
+        __enter();
+    }
     
     /** copy ctor.
      */
@@ -141,25 +155,6 @@ public:
         o._p = NULL;
     }
 
-    /** str.
-     */    
-    obj(const char* s):_p(PyString_FromString(s))
-    {}
-
-    /** long. please use 0L to avoid silly type confusing of compilers
-     */
-    obj(long i):_p(PyInt_FromLong(i))
-    {}
-    
-    long as_long()const
-    {
-        long r = PyInt_AsLong(_p);
-        if(PyErr_Occurred() != NULL){
-            throw type_err("py as_long failed");
-        }
-        return r;
-    }
-    
     /** tuple.
      */
     obj(std::initializer_list<obj> l):_p(PyTuple_New(l.size()))
@@ -195,20 +190,111 @@ public:
         return _p == NULL;
     }
     
-    /** get inner PyObject.
-     */
-    PyObject* p()const
+    // cast
+    
+    /** is false
+     */    
+    bool operator !()const
     {
-        return _p;
-    }
-        
-    /** test callable.
-     */
-    bool is_callable()const
-    {
-        return (_p) && (PyCallable_Check(_p));
+        return !PyObject_IsTrue(_p);
     }
     
+    /** int.
+     */
+    obj(int i):_p(PyInt_FromLong(i))
+    {}
+
+    /** long.
+     */
+    obj(long i):_p(PyInt_FromLong(i))
+    {}
+
+    /** is_int.
+     */
+    bool is_int()const
+    {
+        return _p && PyInt_Check(_p);
+    }
+    
+    /** get long from obj
+     */
+    long as_long()const
+    {
+        long r = PyInt_AsLong(_p);
+        if(PyErr_Occurred() != NULL){
+            throw type_err("py as_long failed");
+        }
+        return r;
+    }
+    
+    /** double ctor.
+     */
+    obj(double v):_p(PyFloat_FromDouble(v))
+    {}
+
+    /** is_float.
+     */
+    bool is_float()const
+    {
+        return _p && PyFloat_Check(_p);
+    }
+    
+    /** as_double from obj.
+     */
+    double as_double()const
+    {
+        double r = PyFloat_AsDouble(_p);
+        if(PyErr_Occurred() != NULL){
+            throw type_err("py as_double failed");
+        }
+        return r;
+    }
+    
+    /** str.
+     */    
+    obj(const char* s):_p(PyString_FromString(s))
+    {}
+
+    /** c_str().
+     */
+    const char* c_str()const
+    {
+        const char* p = PyString_AsString(_p);
+        if(!p)
+            throw type_err("py c_str failed");
+        
+        return p;
+    }
+
+    /** py object type.
+     */
+    obj type()const
+    {
+        if(_p){
+            PyObject* p = PyObject_Type(_p);
+            if(!p)
+                throw type_err("py type failed");
+            return p;
+        }
+        return obj();
+    }
+    
+    /** type check
+     */
+    bool is_a(const obj& t)const
+    {
+        if(t.is_null())
+            throw type_err("py is_a with null type");
+            
+        int r = PyObject_TypeCheck(_p, t._p->ob_type);
+        if(r == -1)
+            throw val_err("py is_a failed");
+            
+        return r;
+    }
+
+    // attr
+            
     /** has attr.
      */
     bool has_attr(const obj& o)const
@@ -292,7 +378,9 @@ public:
             throw index_err("py del_attr failed");
     }
 
-    /** comparison.
+    // comparison
+    
+    /** <
      */
     bool operator < (const obj& o)const
     {
@@ -384,6 +472,8 @@ public:
         return r;
     }
     
+    // output
+    
     /** repr.
      */
     obj repr()const
@@ -414,12 +504,29 @@ public:
         return p;
     }
     
-    bool is_a(const obj& cls)const
+    void output(std::ostream& s)const
     {
-        int r = PyObject_IsInstance(_p, cls._p);
-        if(r == -1)
-            throw val_err("py is_a failed");
-        return r;
+        if(!_p){
+            s << "<NULL>";
+        }
+        else{
+            const char* p = PyString_AsString(_p);
+            if(p){
+                s << p;
+            }
+            else{
+                s << str().c_str();
+            }
+        }
+    }
+
+    // call
+        
+    /** test callable.
+     */
+    bool is_callable()const
+    {
+        return (_p) && (PyCallable_Check(_p));
     }
     
     template<typename ...argT>obj operator ()(argT&& ...a)const
@@ -437,16 +544,95 @@ public:
             throw type_err("py call failed");
         return r;
     }
+        
+    // container methods
     
-    /** get item.
+    /** len.
      */
-    obj operator [](const obj& o)const
+    long size()const
+    {
+        if(_p){
+            if(PySequence_Check(_p)){        
+                long r = PySequence_Size(_p);
+                if(r != -1)
+                    return r;
+            }
+            else if(PyMapping_Check(_p)){
+                long r = PyMapping_Size(_p);
+                if(r != -1)
+                    return r;
+            }
+            else if(PySet_Check(_p) || PyFrozenSet_Check(_p)){
+                long r = PySet_Size(_p);
+                if(r != -1)
+                    return r;
+            }
+        }
+        throw type_err("len failed");
+    }
+
+    /** 'in' as 'has'.
+     */
+    bool has(const obj& x)const
+    {
+        if(_p){
+            if(PySequence_Check(_p)){        
+                int r = PySequence_Contains(p(), x._p);
+                if(r != -1)
+                    return r;
+            }
+            else if(PyMapping_Check(_p)){
+                int r = PyMapping_HasKey(_p, x._p);
+                if(r != -1)
+                    return r;
+            }
+            else if(PySet_Check(_p) || PyFrozenSet_Check(_p)){
+                int r = PySet_Contains(_p, x._p);
+                if(r != -1)
+                    return r;
+            }
+        }
+        throw type_err("has failed");
+    }
+
+    /** get item.
+     * Warning, a new obj will be got! not a reference to the original one!
+     */
+    const obj operator [](const obj& o)const
     {
         PyObject* p = PyObject_GetItem(_p, o._p);
         if(!p){
             throw index_err("non-existing py attr");
         }
-        return p;    
+        return p;
+    }
+    
+    /** set_item.
+     */
+    void set_item(const obj& key, const obj& value)const
+    {
+        int r = PyObject_SetItem(_p, key._p, value._p);
+        if(r == -1)
+            throw index_err("py set_item");
+    }
+    
+    /** del_item.
+     */
+    void del_item(const obj& key)
+    {
+        int r = PyObject_DelItem(_p, key._p);
+        if(r == -1)
+            throw index_err("py del_item");
+    }
+    
+    /** slice, [i:j].
+     */
+    obj sub(int i, int j = std::numeric_limits<int>::max())const
+    {
+        PyObject* p = PySequence_GetSlice(_p, i, j);
+        if(!p)
+            throw type_err("py sub");
+        return p;
     }
     
     /** get iter.
@@ -454,33 +640,8 @@ public:
     inline iter begin()const;
     inline iter end()const;
     
-    /** c_str().
-     */
-    const char* c_str()const
-    {
-        const char* p = PyString_AsString(_p);
-        if(!p)
-            throw type_err("py c_str failed");
-        
-        return p;
-    }
-    
-    void output(std::ostream& s)const
-    {
-        if(!_p){
-            s << "<NULL>";
-        }
-        else{
-            const char* p = PyString_AsString(_p);
-            if(p){
-                s << p;
-            }
-            else{
-                s << str().c_str();
-            }
-        }
-    }
-    
+    // introspection
+
     /** py object dir.
      */
     obj dir()const
@@ -491,24 +652,6 @@ public:
         return p;
     }
    
-    /** len.
-     */
-    long size()const
-    {
-        long r = PySequence_Size(p());
-        if(r == -1)
-            throw type_err("len failed");
-        return r;
-    }
-
-    bool has(const obj& x)const
-    {
-        int r = PySequence_Contains(p(), x.p());
-        if(r == -1)
-            throw type_err("has failed");
-        return r;
-    }
-
     /** refcnt.
      */
     Py_ssize_t refcnt()const
@@ -518,6 +661,14 @@ public:
         else
             return 0;
     }
+    
+    /** get inner PyObject.
+     */
+    PyObject* p()const
+    {
+        return _p;
+    }
+        
 };
 
 /** iter for the c++11 range loop.
@@ -596,11 +747,6 @@ inline obj list(std::initializer_list<obj> l)
         x.__reset();
     }
     return o;
-}
-
-inline obj list_cast(const obj& o)
-{
-    
 }
 
 // implementation
