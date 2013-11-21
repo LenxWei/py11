@@ -127,7 +127,8 @@ protected:
     }
 
 private:        
-    /** disabled
+    /** disabled.
+     * to prohibit getting a PyObject* from p() without correct ref counting
      */
     obj(PPyObject p);
 
@@ -245,7 +246,7 @@ public:
     long as_long()const
     {
         long r = PyInt_AsLong(_p);
-        if(PyErr_Occurred() != NULL){
+        if(r== -1 && PyErr_Occurred() != NULL){
             throw type_err("as_long failed");
         }
         return r;
@@ -269,7 +270,7 @@ public:
     double as_double()const
     {
         double r = PyFloat_AsDouble(_p);
-        if(PyErr_Occurred() != NULL){
+        if(r== -1.0 && PyErr_Occurred() != NULL){
             throw type_err("as_double failed");
         }
         return r;
@@ -516,7 +517,7 @@ public:
     {
         if(PySequence_Check(_p)){     
             obj r = PySequence_Concat(_p, o._p);
-            if(!!r)
+            if(!r.is_null())
                 return r;
         }
         throw type_err("op + failed");        
@@ -529,7 +530,7 @@ public:
     {
         if(PySequence_Check(_p)){     
             obj r = PySequence_InPlaceConcat(_p, o._p);
-            if(!!r)
+            if(!r.is_null())
                 return *this;
         }
         throw type_err("op += failed");        
@@ -541,7 +542,7 @@ public:
     obj operator & (const obj& o)const
     {
         obj r = PyNumber_And(_p, o._p);
-        if(!!r)
+        if(!r.is_null())
             return r;
         throw type_err("op & failed");        
     }
@@ -552,7 +553,7 @@ public:
     obj& operator &=(const obj& o)
     {
         obj r = PyNumber_InPlaceAnd(_p, o._p);
-        if(!!r)
+        if(!r.is_null())
             return *this;
         throw type_err("op &= failed");        
     }
@@ -563,7 +564,7 @@ public:
     obj operator | (const obj& o)const
     {
         obj r = PyNumber_Or(_p, o._p);
-        if(!!r)
+        if(!r.is_null())
             return r;
         throw type_err("op | failed");        
     }
@@ -574,7 +575,7 @@ public:
     obj& operator |=(const obj& o)
     {
         obj r = PyNumber_InPlaceOr(_p, o._p);
-        if(!!r)
+        if(!r.is_null())
             return *this;
         throw type_err("op |= failed");        
     }    
@@ -585,7 +586,7 @@ public:
     obj operator - (const obj& o)const
     {
         obj r = PyNumber_Subtract(_p, o._p);
-        if(!!r)
+        if(!r.is_null())
             return r;
         throw type_err("op - failed");        
     }
@@ -596,7 +597,7 @@ public:
     obj& operator -=(const obj& o)
     {
         obj r = PyNumber_InPlaceSubtract(_p, o._p);
-        if(!!r)
+        if(!r.is_null())
             return *this;
         throw type_err("op -= failed");        
     }    
@@ -620,8 +621,9 @@ public:
     obj str()const
     {
         PyObject* p = PyObject_Str(_p);
-        if(p == NULL)
+        if(p == NULL){
             throw val_err("str failed");
+        }
         return p;
     }
     
@@ -640,15 +642,16 @@ public:
     {
         if(!_p){
             s << "<NULL>";
+            return;
+        }
+        if(PyString_Check(_p)){
+            const char* p = PyString_AsString(_p);
+            if(!p)
+                throw val_err("bad internal string");
+            s << p;
         }
         else{
-            const char* p = PyString_AsString(_p);
-            if(p){
-                s << p;
-            }
-            else{
-                s << str().c_str();
-            }
+            s << str().c_str();
         }
     }
 
@@ -771,7 +774,7 @@ public:
     {
         if(PySequence_Check(_p)){        
             obj r = PySequence_List(_p);
-            if(!!r)
+            if(!r.is_null())
                 return r;
         }
         throw type_err("to_list failed");
@@ -784,7 +787,7 @@ public:
     {
         if(PySequence_Check(_p)){        
             obj r = PySequence_Tuple(_p);
-            if(!!r)
+            if(!r.is_null())
                 return r;
         }
         throw type_err("to_tuple failed");
@@ -963,7 +966,7 @@ inline obj list(std::initializer_list<obj> l)
 inline obj set(const obj& o = obj() )
 {
     obj s = PySet_New(o.p());
-    if(!s)
+    if(s.is_null())
         throw type_err("creating set failed");
     return s;
 }
