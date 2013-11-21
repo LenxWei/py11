@@ -16,9 +16,10 @@ int main(int argc, char** argv)
     cout << s.as_double() << ":" << s << endl;
     
     // consts
-    cout << "True: " << py::obj(py::True) << endl;
+    cout << "True: " << py::obj(Py_True) << endl;
         
-    // tuple
+    cout << ">> tuple" << endl;
+    
     py::obj y = {"abc", 2, 0L, 1, 3};
     cout << y << ":" << y.size() << endl;
     
@@ -31,9 +32,21 @@ int main(int argc, char** argv)
         cout << "caught: " << e.what() << endl;
     }
     
-    
-    // list
     {
+        cout << ">> set" << endl;
+        py::obj s = py::set(y);
+        cout << "s = " << s << endl;
+        py::obj s1 = py::set({1 ,4, 0});
+        cout << "s1 = " << s1 << endl;
+
+        cout << "s | s1 = " << (s | s1) << endl;
+
+        s -= s1;
+        cout << "s -= s1 : " << s << endl;
+    }
+    
+    {
+        cout << ">> list" << endl;
         py::obj l = py::list({{0, "abc"}, 22});
         cout << l << endl;
         for(auto &x: l){
@@ -45,16 +58,18 @@ int main(int argc, char** argv)
         cout << "22 in l: " << l.has(22) << endl;
     }
     
-    // ref count
-    py::obj z = y[1];
-    int refcnt = z.refcnt();
-    py::obj z1 = y[1];
+    {
+        cout << ">> ref count tests" << endl;
+        py::obj z = y[1];
+        int refcnt = z.refcnt();
+        py::obj z1 = y[1];
     
-    assert( z1.refcnt() == refcnt + 1);
-    y.release();
-    assert( z1.refcnt() == refcnt);
-    z.release();
-    assert( z1.refcnt() == refcnt - 1);
-        
+        assert( z1.refcnt() == refcnt + 1);
+        y.release();
+        assert( z1.refcnt() == refcnt);
+        z.release();
+        assert( z1.refcnt() == refcnt - 1);
+    }
+    
     py::fini();
 }

@@ -71,12 +71,6 @@ inline void fini()
 
 class iter;
 
-enum const_type {
-    False = 0,
-    True = 1,
-    None = 2,
-};
-
 /** wrapper of PyObject.
  */
 class obj{
@@ -105,13 +99,6 @@ protected:
 public:
     obj():_p(NULL)
     {}
-    
-    obj(const_type i):_p(NULL)
-    {
-        static PyObject* c[] = {Py_False, Py_True, Py_None};
-        _p = c[i];
-        __enter();
-    }
     
     /** copy ctor.
      */
@@ -196,7 +183,7 @@ public:
      */    
     bool operator !()const
     {
-        return !PyObject_IsTrue(_p);
+        return (!_p) || PyObject_Not(_p);
     }
     
     /** int.
@@ -217,6 +204,7 @@ public:
     }
     
     /** get long from obj
+     * @throw type_err
      */
     long as_long()const
     {
@@ -240,6 +228,7 @@ public:
     }
     
     /** as_double from obj.
+     * @throw type_err
      */
     double as_double()const
     {
@@ -256,6 +245,7 @@ public:
     {}
 
     /** c_str().
+     * @throw type_err
      */
     const char* c_str()const
     {
@@ -267,6 +257,7 @@ public:
     }
 
     /** py object type.
+     * @throw type_err
      */
     obj type()const
     {
@@ -280,6 +271,8 @@ public:
     }
     
     /** type check
+     * @throw type_err
+     * @throw val_err
      */
     bool is_a(const obj& t)const
     {
@@ -310,6 +303,7 @@ public:
     }
 
     /** get attr.
+     * @throw index_err
      */
     obj attr(const obj& o)const
     {
@@ -321,6 +315,7 @@ public:
     }
 
     /** get attr.
+     * @throw index_err
      */
     obj attr(const char* s)const
     {
@@ -332,6 +327,7 @@ public:
     }
 
     /** get attr, short form.
+     * @throw index_err
      */
     obj a(const char* s)const
     {
@@ -343,6 +339,7 @@ public:
     }
 
     /** set attr.
+     * @throw index_err
      */
     void set_attr(const obj& a, const obj& v)const
     {
@@ -352,6 +349,7 @@ public:
     }
 
     /** set attr.
+     * @throw index_err
      */
     void set_attr(const char* a, const obj& v)const
     {
@@ -361,6 +359,7 @@ public:
     }
 
     /** del attr.
+     * @throw index_err
      */
     void del_attr(const obj& a)const
     {
@@ -370,6 +369,7 @@ public:
     }
 
     /** del attr.
+     * @throw index_err
      */
     void del_attr(const char* a)const
     {
@@ -381,6 +381,7 @@ public:
     // comparison
     
     /** <
+     * @throw val_err
      */
     bool operator < (const obj& o)const
     {
@@ -472,9 +473,102 @@ public:
         return r;
     }
     
+    /** op +.
+     * @throw type_err
+     */
+    obj operator + (const obj& o)const
+    {
+        if(PySequence_Check(_p)){     
+            obj r = PySequence_Concat(_p, o._p);
+            if(!!r)
+                return r;
+        }
+        throw type_err("op + failed");        
+    }
+    
+    /** op +=.
+     * @throw type_err
+     */
+    obj& operator +=(const obj& o)
+    {
+        if(PySequence_Check(_p)){     
+            obj r = PySequence_InPlaceConcat(_p, o._p);
+            if(!!r)
+                return *this;
+        }
+        throw type_err("op += failed");        
+    }
+    
+    /** op &.
+     * @throw type_err
+     */
+    obj operator & (const obj& o)const
+    {
+        obj r = PyNumber_And(_p, o._p);
+        if(!!r)
+            return r;
+        throw type_err("op & failed");        
+    }
+    
+    /** op &=.
+     * @throw type_err
+     */
+    obj& operator &=(const obj& o)
+    {
+        obj r = PyNumber_InPlaceAnd(_p, o._p);
+        if(!!r)
+            return *this;
+        throw type_err("op &= failed");        
+    }
+    
+    /** op |.
+     * @throw type_err
+     */
+    obj operator | (const obj& o)const
+    {
+        obj r = PyNumber_Or(_p, o._p);
+        if(!!r)
+            return r;
+        throw type_err("op | failed");        
+    }
+    
+    /** op |=.
+     * @throw type_err
+     */
+    obj& operator |=(const obj& o)
+    {
+        obj r = PyNumber_InPlaceOr(_p, o._p);
+        if(!!r)
+            return *this;
+        throw type_err("op |= failed");        
+    }    
+    
+    /** op -.
+     * @throw type_err
+     */
+    obj operator - (const obj& o)const
+    {
+        obj r = PyNumber_Subtract(_p, o._p);
+        if(!!r)
+            return r;
+        throw type_err("op - failed");        
+    }
+    
+    /** op -=.
+     * @throw type_err
+     */
+    obj& operator -=(const obj& o)
+    {
+        obj r = PyNumber_InPlaceSubtract(_p, o._p);
+        if(!!r)
+            return *this;
+        throw type_err("op -= failed");        
+    }    
+    
     // output
     
     /** repr.
+     * @throw val_err
      */
     obj repr()const
     {
@@ -485,6 +579,7 @@ public:
     }
     
     /** str.
+     * @throw val_err
      */
     obj str()const
     {
@@ -495,6 +590,7 @@ public:
     }
     
     /** unicode.
+     * @throw val_err
      */
     obj unicode()const
     {
@@ -529,6 +625,9 @@ public:
         return (_p) && (PyCallable_Check(_p));
     }
     
+    /** call using operator.
+     * @throw type_err
+     */
     template<typename ...argT>obj operator ()(argT&& ...a)const
     {
         PyObject* r = PyObject_CallFunctionObjArgs(_p, obj(a).p()..., NULL);
@@ -537,6 +636,9 @@ public:
         return r;
     }
 
+    /** call with key/value pairs.
+     * @throw type_err
+     */
     obj call(const obj& args, const obj& kw)const
     {
         PyObject* r = PyObject_Call(_p, args._p, kw._p);
@@ -547,7 +649,8 @@ public:
         
     // container methods
     
-    /** len.
+    /** 'len' as 'size'.
+     * @throw type_err
      */
     long size()const
     {
@@ -562,7 +665,7 @@ public:
                 if(r != -1)
                     return r;
             }
-            else if(PySet_Check(_p) || PyFrozenSet_Check(_p)){
+            else if(PyAnySet_Check(_p)){
                 long r = PySet_Size(_p);
                 if(r != -1)
                     return r;
@@ -572,6 +675,7 @@ public:
     }
 
     /** 'in' as 'has'.
+     * @throw type_err
      */
     bool has(const obj& x)const
     {
@@ -586,7 +690,7 @@ public:
                 if(r != -1)
                     return r;
             }
-            else if(PySet_Check(_p) || PyFrozenSet_Check(_p)){
+            else if(PyAnySet_Check(_p)){
                 int r = PySet_Contains(_p, x._p);
                 if(r != -1)
                     return r;
@@ -595,8 +699,103 @@ public:
         throw type_err("has failed");
     }
 
+    /** seq find a item.
+     * @return index if found, -1 otherwise
+     * @throw type_err
+     */
+    long find(const obj& o)const
+    {
+        if(PySequence_Check(_p)){        
+            long r = PySequence_Index(_p, o._p);
+            return r;
+        }
+        throw type_err("index failed");
+    }
+    
+    /** seq index.
+     * @return index if found
+     * @throw index_err if not found
+     * @throw type_err
+     */
+    long index(const obj& o)const
+    {
+        if(PySequence_Check(_p)){        
+            long r = PySequence_Index(_p, o._p);
+            if(r == -1)
+                throw index_err("index failed");
+            return r;
+        }
+        throw type_err("index failed");
+    }
+
+    /** get a list clone.
+     * @throw type_err
+     */    
+    obj to_list()const
+    {
+        if(PySequence_Check(_p)){        
+            obj r = PySequence_List(_p);
+            if(!!r)
+                return r;
+        }
+        throw type_err("to_list failed");
+    }
+    
+    /** get a tuple clone.
+     * @throw type_err
+     */    
+    obj to_tuple()const
+    {
+        if(PySequence_Check(_p)){        
+            obj r = PySequence_Tuple(_p);
+            if(!!r)
+                return r;
+        }
+        throw type_err("to_tuple failed");
+    }
+    
+    /** get items of a mapping.
+     * @throw type_err
+     */    
+    obj to_items()const
+    {
+        if(PyMapping_Check(_p)){        
+            obj r = PyMapping_Items(_p);
+            if(!!r)
+                return r;
+        }
+        throw type_err("to_items failed");
+    }
+
+    /** get keys of a mapping.
+     * @throw type_err
+     */    
+    obj to_keys()const
+    {
+        if(PyMapping_Check(_p)){        
+            obj r = PyMapping_Keys(_p);
+            if(!!r)
+                return r;
+        }
+        throw type_err("to_keys failed");
+    }
+        
+    /** get values of a mapping.
+     * @throw type_err
+     */    
+    obj to_vals()const
+    {
+        if(PyMapping_Check(_p)){        
+            obj r = PyMapping_Values(_p);
+            if(!!r)
+                return r;
+        }
+        throw type_err("to_vals failed");
+    }
+        
     /** get item.
      * Warning, a new obj will be got! not a reference to the original one!
+     * @throw index_err
      */
     const obj operator [](const obj& o)const
     {
@@ -608,6 +807,7 @@ public:
     }
     
     /** set_item.
+     * @throw index_err
      */
     void set_item(const obj& key, const obj& value)const
     {
@@ -617,6 +817,7 @@ public:
     }
     
     /** del_item.
+     * @throw index_err
      */
     void del_item(const obj& key)
     {
@@ -626,6 +827,7 @@ public:
     }
     
     /** slice, [i:j].
+     * @throw type_err
      */
     obj sub(int i, int j = std::numeric_limits<int>::max())const
     {
@@ -635,14 +837,19 @@ public:
         return p;
     }
     
-    /** get iter.
+    /** get the begin iter.
+     * @throw type_err
      */
     inline iter begin()const;
+    
+    /** get the end iter.
+     */
     inline iter end()const;
     
     // introspection
 
     /** py object dir.
+     * @throw val_err
      */
     obj dir()const
     {
@@ -682,6 +889,9 @@ public:
     iter():_fin(true)
     {}
     
+    /** create iter from obj.
+     * @throw type_err
+     */
     iter(const obj& o):_it(PyObject_GetIter(o.p())), _fin(false)
     {
         if(_it.is_null())
@@ -727,6 +937,7 @@ inline std::ostream& operator <<(std::ostream& s, const obj& o)
 }
 
 /** py import.
+ * @throw val_err
  */
 inline obj import(const char* module_name)
 {
@@ -749,6 +960,16 @@ inline obj list(std::initializer_list<obj> l)
     return o;
 }
 
+/** py set.
+ * @throw type_err
+ */
+inline obj set(const obj& o = obj() )
+{
+    obj s = PySet_New(o.p());
+    if(!s)
+        throw type_err("creating set failed");
+    return s;
+}
 // implementation
 
 inline iter obj::end()const
