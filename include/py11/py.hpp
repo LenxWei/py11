@@ -158,10 +158,15 @@ public:
         return *this;
     }
 
-    /** create from Py functions, need not to inc ref
+    /** create from Py functions.
+     * in most of cases, need not to inc ref.
+     * please read python doc carefully
      */
-    obj(PyObject* p):_p(p)
-    {}
+    obj(PyObject* p, bool borrowed = false):_p(p)
+    {
+        if(borrowed)
+            Py_XINCREF(_p);
+    }
     
     obj& operator=(PyObject* p)
     {
