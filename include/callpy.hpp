@@ -7,6 +7,9 @@
 
 namespace py {
 
+/* exceptions
+************/
+
 /** exception: err.
  */
 class err: public std::exception{
@@ -50,6 +53,8 @@ public:
     {}
 };
 
+/* py system utils
+*****************/
 
 /** init the py lib
  * @param program_name usually use argv[0]
@@ -69,7 +74,32 @@ inline void fini()
     Py_Finalize();
 }
 
+
+/* assistant classes
+*******************/
+
 class iter;
+
+class PPyObject {
+private:
+    PyObject* _p;
+public:
+    PPyObject(PyObject* p):_p(p)
+    {}
+    
+    operator PyObject*()const
+    {
+        return _p;
+    }
+
+    template<typename T> explicit operator T()const
+    {
+        return (T)_p;
+    }
+};
+
+/* main class
+************/
 
 /** wrapper of PyObject.
  */
@@ -95,10 +125,16 @@ protected:
         if(_p)
             Py_INCREF(_p);
     }
-        
+
+private:        
+    /** disabled
+     */
+    obj(PPyObject p);
+
 public:
     obj():_p(NULL)
     {}
+    
     
     /** copy ctor.
      */
@@ -148,7 +184,7 @@ public:
     {
         long i = 0;
         for(auto &x: l){
-            PyTuple_SET_ITEM(_p, i++, x.p());
+            PyTuple_SET_ITEM(_p, i++, x._p);
             x.__reset();
         }
     }
@@ -630,7 +666,7 @@ public:
      */
     template<typename ...argT>obj operator ()(argT&& ...a)const
     {
-        PyObject* r = PyObject_CallFunctionObjArgs(_p, obj(a).p()..., NULL);
+        PyObject* r = PyObject_CallFunctionObjArgs(_p, obj(a)._p..., NULL);
         if(r == NULL)
             throw type_err("operator() failed");
         return r;
@@ -681,7 +717,7 @@ public:
     {
         if(_p){
             if(PySequence_Check(_p)){        
-                int r = PySequence_Contains(p(), x._p);
+                int r = PySequence_Contains(_p, x._p);
                 if(r != -1)
                     return r;
             }
@@ -832,7 +868,7 @@ public:
     
     /** get inner PyObject.
      */
-    PyObject* p()const
+    PPyObject p()const
     {
         return _p;
     }

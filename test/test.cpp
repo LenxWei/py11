@@ -44,6 +44,10 @@ int main(int argc, char** argv)
 
     {
         cout << ">> set" << endl;
+        cout << "y: " << y << endl;
+        for(auto &x: y){
+            cout << x << endl;
+        }
         py::obj s = py::set(y);
         cout << "s = " << s << endl;
         py::obj s1 = py::set({1 ,4, 0});
