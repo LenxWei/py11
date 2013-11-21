@@ -210,7 +210,7 @@ public:
     {
         long r = PyInt_AsLong(_p);
         if(PyErr_Occurred() != NULL){
-            throw type_err("py as_long failed");
+            throw type_err("as_long failed");
         }
         return r;
     }
@@ -234,7 +234,7 @@ public:
     {
         double r = PyFloat_AsDouble(_p);
         if(PyErr_Occurred() != NULL){
-            throw type_err("py as_double failed");
+            throw type_err("as_double failed");
         }
         return r;
     }
@@ -251,7 +251,7 @@ public:
     {
         const char* p = PyString_AsString(_p);
         if(!p)
-            throw type_err("py c_str failed");
+            throw type_err("c_str failed");
         
         return p;
     }
@@ -264,7 +264,7 @@ public:
         if(_p){
             PyObject* p = PyObject_Type(_p);
             if(!p)
-                throw type_err("py type failed");
+                throw type_err("type failed");
             return p;
         }
         return obj();
@@ -277,11 +277,11 @@ public:
     bool is_a(const obj& t)const
     {
         if(t.is_null())
-            throw type_err("py is_a with null type");
+            throw type_err("is_a with null type");
             
         int r = PyObject_TypeCheck(_p, t._p->ob_type);
         if(r == -1)
-            throw val_err("py is_a failed");
+            throw val_err("is_a failed");
             
         return r;
     }
@@ -309,7 +309,7 @@ public:
     {
         PyObject* p = PyObject_GetAttr(_p, o._p);
         if(!p){
-            throw index_err("non-existing py attr");
+            throw index_err("non-existing attr");
         }
         return p;
     }
@@ -321,7 +321,7 @@ public:
     {
         PyObject* p = PyObject_GetAttrString(_p, s);
         if(!p){
-            throw index_err("non-existing py attr");
+            throw index_err("non-existing attr");
         }
         return p;
     }
@@ -333,7 +333,7 @@ public:
     {
         PyObject* p = PyObject_GetAttrString(_p, s);
         if(!p){
-            throw index_err("non-existing py attr");
+            throw index_err("non-existing attr");
         }
         return p;
     }
@@ -345,7 +345,7 @@ public:
     {
         int r = PyObject_SetAttr(_p, a._p, v._p);
         if(r == -1)
-            throw index_err("py set_attr failed");
+            throw index_err("set_attr failed");
     }
 
     /** set attr.
@@ -355,7 +355,7 @@ public:
     {
         int r = PyObject_SetAttrString(_p, a, v._p);
         if(r == -1)
-            throw index_err("py set_attr failed");
+            throw index_err("set_attr failed");
     }
 
     /** del attr.
@@ -365,7 +365,7 @@ public:
     {
         int r = PyObject_DelAttr(_p, a._p);
         if(r == -1)
-            throw index_err("py del_attr failed");
+            throw index_err("del_attr failed");
     }
 
     /** del attr.
@@ -375,7 +375,7 @@ public:
     {
         int r = PyObject_DelAttrString(_p, a);
         if(r == -1)
-            throw index_err("py del_attr failed");
+            throw index_err("del_attr failed");
     }
 
     // comparison
@@ -393,7 +393,7 @@ public:
             return false;
         int r = PyObject_RichCompareBool(_p, o._p, Py_LT);
         if(r == -1){
-            throw val_err("py < failed");
+            throw val_err("op < failed");
         }
         return r;
     }
@@ -408,7 +408,7 @@ public:
             return false;
         int r = PyObject_RichCompareBool(_p, o._p, Py_LE);
         if(r == -1){
-            throw val_err("py <= failed");
+            throw val_err("op <= failed");
         }
         return r;
     }
@@ -423,7 +423,7 @@ public:
             return false;
         int r = PyObject_RichCompareBool(_p, o._p, Py_EQ);
         if(r == -1){
-            throw val_err("py == failed");
+            throw val_err("op == failed");
         }
         return r;
     }
@@ -438,7 +438,7 @@ public:
             return true;
         int r = PyObject_RichCompareBool(_p, o._p, Py_NE);
         if(r == -1){
-            throw val_err("py != failed");
+            throw val_err("op != failed");
         }
         return r;
     }
@@ -453,7 +453,7 @@ public:
             return true;
         int r = PyObject_RichCompareBool(_p, o._p, Py_GT);
         if(r == -1){
-            throw val_err("py > failed");
+            throw val_err("op > failed");
         }
         return r;
     }
@@ -468,7 +468,7 @@ public:
             return true;
         int r = PyObject_RichCompareBool(_p, o._p, Py_GE);
         if(r == -1){
-            throw val_err("py >= failed");
+            throw val_err("op >= failed");
         }
         return r;
     }
@@ -574,7 +574,7 @@ public:
     {
         PyObject* p = PyObject_Repr(_p);
         if(p == NULL)
-            throw val_err("py repr failed");
+            throw val_err("repr failed");
         return p;
     }
     
@@ -585,7 +585,7 @@ public:
     {
         PyObject* p = PyObject_Str(_p);
         if(p == NULL)
-            throw val_err("py str failed");
+            throw val_err("str failed");
         return p;
     }
     
@@ -596,7 +596,7 @@ public:
     {
         PyObject* p = PyObject_Unicode(_p);
         if(p == NULL)
-            throw val_err("py unicode failed");
+            throw val_err("unicode failed");
         return p;
     }
     
@@ -632,7 +632,7 @@ public:
     {
         PyObject* r = PyObject_CallFunctionObjArgs(_p, obj(a).p()..., NULL);
         if(r == NULL)
-            throw type_err("py operator() failed");
+            throw type_err("operator() failed");
         return r;
     }
 
@@ -643,7 +643,7 @@ public:
     {
         PyObject* r = PyObject_Call(_p, args._p, kw._p);
         if(r == NULL)
-            throw type_err("py call failed");
+            throw type_err("call failed");
         return r;
     }
         
@@ -753,45 +753,6 @@ public:
         }
         throw type_err("to_tuple failed");
     }
-    
-    /** get items of a mapping.
-     * @throw type_err
-     */    
-    obj to_items()const
-    {
-        if(PyMapping_Check(_p)){        
-            obj r = PyMapping_Items(_p);
-            if(!!r)
-                return r;
-        }
-        throw type_err("to_items failed");
-    }
-
-    /** get keys of a mapping.
-     * @throw type_err
-     */    
-    obj to_keys()const
-    {
-        if(PyMapping_Check(_p)){        
-            obj r = PyMapping_Keys(_p);
-            if(!!r)
-                return r;
-        }
-        throw type_err("to_keys failed");
-    }
-        
-    /** get values of a mapping.
-     * @throw type_err
-     */    
-    obj to_vals()const
-    {
-        if(PyMapping_Check(_p)){        
-            obj r = PyMapping_Values(_p);
-            if(!!r)
-                return r;
-        }
-        throw type_err("to_vals failed");
-    }
         
     /** get item.
      * Warning, a new obj will be got! not a reference to the original one!
@@ -801,7 +762,7 @@ public:
     {
         PyObject* p = PyObject_GetItem(_p, o._p);
         if(!p){
-            throw index_err("non-existing py attr");
+            throw index_err("non-existing item");
         }
         return p;
     }
@@ -813,7 +774,7 @@ public:
     {
         int r = PyObject_SetItem(_p, key._p, value._p);
         if(r == -1)
-            throw index_err("py set_item");
+            throw index_err("set_item failed");
     }
     
     /** del_item.
@@ -823,7 +784,7 @@ public:
     {
         int r = PyObject_DelItem(_p, key._p);
         if(r == -1)
-            throw index_err("py del_item");
+            throw index_err("del_item failed");
     }
     
     /** slice, [i:j].
@@ -833,7 +794,7 @@ public:
     {
         PyObject* p = PySequence_GetSlice(_p, i, j);
         if(!p)
-            throw type_err("py sub");
+            throw type_err("sub failed");
         return p;
     }
     
@@ -855,7 +816,7 @@ public:
     {
         PyObject* p = PyObject_Dir(_p);
         if(!p)
-            throw val_err("py dir failed");
+            throw val_err("dir failed");
         return p;
     }
    
@@ -970,6 +931,14 @@ inline obj set(const obj& o = obj() )
         throw type_err("creating set failed");
     return s;
 }
+
+/** py dict.
+ */
+inline obj dict()
+{
+    return PyDict_New();
+}
+
 // implementation
 
 inline iter obj::end()const

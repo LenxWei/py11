@@ -33,6 +33,16 @@ int main(int argc, char** argv)
     }
     
     {
+        cout << ">> dict" << endl;
+        py::obj z = py::dict();
+        
+        z.set_item(1, "abc");
+        z.set_item("def", 2);
+        cout << z << endl;
+        cout << "items: " << z.a("items")() << endl;
+    }
+
+    {
         cout << ">> set" << endl;
         py::obj s = py::set(y);
         cout << "s = " << s << endl;
@@ -70,6 +80,5 @@ int main(int argc, char** argv)
         z.release();
         assert( z1.refcnt() == refcnt - 1);
     }
-    
     py::fini();
 }
