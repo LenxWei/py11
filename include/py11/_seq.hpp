@@ -26,12 +26,6 @@ public:
         enter(o.p());
     }
     
-    seq(obj&& o)noexcept(!PY11_ENFORCE)
-    {
-        type_check(o);
-        _p = o.transfer();
-    }
-    
     seq& operator=(const obj& o)
     {
         if(o.p()!=_p){
@@ -42,6 +36,12 @@ public:
         return *this;
     }
 
+    seq(obj&& o)noexcept(!PY11_ENFORCE)
+    {
+        type_check(o);
+        _p = o.transfer();
+    }
+    
     seq& operator=(obj&& o)noexcept(!PY11_ENFORCE)
     {
         if(o.p()!=_p){
@@ -84,8 +84,8 @@ public:
      */
     seq operator + (const obj& o)const
     {
-        obj r = PySequence_Concat(_p, o.p());
-        if(!r.is_null())
+        PyObject* r = PySequence_Concat(_p, o.p());
+        if(r)
             return r;
         throw type_err("op + failed");        
     }
@@ -95,8 +95,8 @@ public:
      */
     seq& operator +=(const obj& o)
     {
-        obj r = PySequence_InPlaceConcat(_p, o.p());
-        if(!r.is_null())
+        PyObject* r = PySequence_InPlaceConcat(_p, o.p());
+        if(r)
             return *this;
         throw type_err("op += failed");        
     }
@@ -106,10 +106,10 @@ public:
      */
     seq operator * (Py_ssize_t t)const
     {
-        seq r = PySequence_Repeat(_p, t);
-        if(!r.is_null())
+        PyObject* r = PySequence_Repeat(_p, t);
+        if(r)
             return r;
-        throw type_err("op + failed");        
+        throw type_err("op * failed");        
     }
     
     /** op *=.
@@ -117,10 +117,10 @@ public:
      */
     seq& operator *=(Py_ssize_t t)
     {
-        seq r = PySequence_InPlaceRepeat(_p, t);
-        if(!r.is_null())
+        PyObject* r = PySequence_InPlaceRepeat(_p, t);
+        if(r)
             return *this;
-        throw type_err("op += failed");        
+        throw type_err("op *= failed");        
     }
 
     // container methods
@@ -175,8 +175,8 @@ public:
      */    
     obj to_list()const
     {
-        obj r = PySequence_List(_p);
-        if(!r.is_null())
+        PyObject* r = PySequence_List(_p);
+        if(r)
             return r;
         throw type_err("to_list failed");
     }
@@ -186,8 +186,8 @@ public:
      */    
     obj to_tuple()const
     {
-        obj r = PySequence_Tuple(_p);
-        if(!r.is_null())
+        PyObject* r = PySequence_Tuple(_p);
+        if(r)
             return r;
         throw type_err("to_tuple failed");
     }

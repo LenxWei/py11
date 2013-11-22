@@ -46,10 +46,12 @@ int main(int argc, char** argv)
         cout << ">> set" << endl;
         cout << "y: " << y << endl;
         
-        py::obj s = py::set(y);
+        py::set s({});
+        cout << "s= " << s << endl;
+        s.extend(y);
         cout << "s= " << s << endl;
 
-        py::obj s1 = py::set({1 ,4, 0});
+        py::set s1 = {1 ,4, 0};
         cout << "s1 = " << s1 << endl;
 
         cout << "s | s1 = " << (s | s1) << endl;
@@ -60,7 +62,7 @@ int main(int argc, char** argv)
     
     {
         cout << ">> list" << endl;
-        py::list l = {{0, "abc"}, 22};
+        py::list l({{0, "abc"}, 22});
         cout << l << endl;
         for(auto &x: l){
             cout << x.refcnt() << endl;

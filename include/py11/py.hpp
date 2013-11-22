@@ -43,6 +43,7 @@ public:
  */
 class obj{
 friend class list;
+friend class set;
 protected:
     PyObject* _p;
 
@@ -141,6 +142,17 @@ public:
             PyTuple_SET_ITEM(_p, i++, x._p);
             x.__reset();
         }
+    }
+    
+    obj& operator = (std::initializer_list<obj> l)
+    {
+        _p = PyTuple_New(l.size());
+        long i = 0;
+        for(auto &x: l){
+            PyTuple_SET_ITEM(_p, i++, x._p);
+            x.__reset();
+        }
+        return *this;
     }
     
     /** dtor.
@@ -475,72 +487,6 @@ public:
         return r;
     }
     
-    /** op &.
-     * @throw type_err
-     */
-    obj operator & (const obj& o)const
-    {
-        obj r = PyNumber_And(_p, o._p);
-        if(!r.is_null())
-            return r;
-        throw type_err("op & failed");        
-    }
-    
-    /** op &=.
-     * @throw type_err
-     */
-    obj& operator &=(const obj& o)
-    {
-        obj r = PyNumber_InPlaceAnd(_p, o._p);
-        if(!r.is_null())
-            return *this;
-        throw type_err("op &= failed");        
-    }
-    
-    /** op |.
-     * @throw type_err
-     */
-    obj operator | (const obj& o)const
-    {
-        obj r = PyNumber_Or(_p, o._p);
-        if(!r.is_null())
-            return r;
-        throw type_err("op | failed");        
-    }
-    
-    /** op |=.
-     * @throw type_err
-     */
-    obj& operator |=(const obj& o)
-    {
-        obj r = PyNumber_InPlaceOr(_p, o._p);
-        if(!r.is_null())
-            return *this;
-        throw type_err("op |= failed");        
-    }    
-    
-    /** op -.
-     * @throw type_err
-     */
-    obj operator - (const obj& o)const
-    {
-        obj r = PyNumber_Subtract(_p, o._p);
-        if(!r.is_null())
-            return r;
-        throw type_err("op - failed");        
-    }
-    
-    /** op -=.
-     * @throw type_err
-     */
-    obj& operator -=(const obj& o)
-    {
-        obj r = PyNumber_InPlaceSubtract(_p, o._p);
-        if(!r.is_null())
-            return *this;
-        throw type_err("op -= failed");        
-    }    
-    
     // output
     
     /** repr.
@@ -763,7 +709,10 @@ inline std::ostream& operator <<(std::ostream& s, const obj& o)
 #include "_iter.hpp"
 #include "_seq.hpp"
 #include "_list.hpp"
+
+#include "_num.hpp"
 #include "_set.hpp"
+
 #include "_dict.hpp"
 
 // implementation

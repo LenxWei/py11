@@ -86,6 +86,20 @@ public:
         }
     }
 
+    /** = {...}
+     */
+    list& operator = (std::initializer_list<obj> l)
+    {
+        release();
+        _p = PyList_New(l.size());
+        long i = 0;
+        for(auto &x: l){
+            PyList_SET_ITEM(_p, i++, x.p());
+            x.__reset();
+        }
+        return *this;
+    }
+    
     // container methods
     
     /** 'len' as 'size'.
@@ -138,8 +152,8 @@ public:
      */    
     obj to_tuple()const
     {
-        obj r = PyList_AsTuple(_p);
-        if(!r.is_null())
+        PyObject* r = PyList_AsTuple(_p);
+        if(r)
             return r;
         throw type_err("to_tuple failed");
     }
