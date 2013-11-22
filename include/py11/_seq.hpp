@@ -2,7 +2,7 @@
  */
 class seq: public obj{
 protected:
-    void type_check(PyObject* p)
+    void type_check(PyObject* p)noexcept(!PY11_ENFORCE)
     {
         if(PY11_ENFORCE && p){
             if(!PySequence_Check(p))
@@ -10,7 +10,7 @@ protected:
         }
     }
     
-    void type_check(const obj& o)
+    void type_check(const obj& o)noexcept(!PY11_ENFORCE)
     {
         type_check((PyObject*)o.p());
     }
@@ -26,7 +26,7 @@ public:
         enter(o.p());
     }
     
-    seq(obj&& o)
+    seq(obj&& o)noexcept(!PY11_ENFORCE)
     {
         type_check(o);
         _p = o.transfer();
@@ -42,7 +42,7 @@ public:
         return *this;
     }
 
-    seq& operator=(obj&& o)
+    seq& operator=(obj&& o)noexcept(!PY11_ENFORCE)
     {
         if(o.p()!=_p){
             type_check(o);

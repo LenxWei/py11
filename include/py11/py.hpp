@@ -52,13 +52,13 @@ protected:
         const_cast<obj&>(*this)._p = NULL;
     }
     
-    void enter(PyObject* p)
+    void enter(PyObject* p)noexcept
     {
         _p = p;
         __enter();
     }
     
-    void __enter()
+    void __enter()noexcept
     {
         if(_p)
             Py_INCREF(_p);
@@ -71,13 +71,13 @@ private:
     obj(PPyObject p);
 
 public:
-    obj():_p(NULL)
+    obj()noexcept:_p(NULL)
     {}
     
     
     /** copy ctor.
      */
-    obj(const obj& o):_p(o._p)
+    obj(const obj& o)noexcept:_p(o._p)
     {
         __enter();
     }
@@ -100,13 +100,13 @@ public:
      * in most of cases, need not to inc ref.
      * please read python doc carefully
      */
-    obj(PyObject* p, bool borrowed = false):_p(p)
+    obj(PyObject* p, bool borrowed = false)noexcept:_p(p)
     {
         if(borrowed)
             Py_XINCREF(_p);
     }
     
-    obj& operator=(PyObject* p)
+    obj& operator=(PyObject* p)noexcept
     {
         if(p!=_p){
             release();
@@ -122,6 +122,16 @@ public:
         o._p = NULL;
     }
 
+    obj& operator=(obj&& o)noexcept
+    {
+        if(o._p!=_p){
+            release();
+            _p = o.transfer();
+        }
+        return *this;
+    }
+
+
     /** tuple.
      */
     obj(std::initializer_list<obj> l):_p(PyTuple_New(l.size()))
@@ -135,14 +145,14 @@ public:
     
     /** dtor.
      */
-    ~obj()
+    ~obj()noexcept
     {
         release();
     }
 
     /** release the contained object
      */
-    void release()
+    void release()noexcept
     {
         if(_p){
             Py_DECREF(_p);
@@ -153,7 +163,7 @@ public:
     /** transfer the ownership of inner object.
      * @return the current PyObject*
      */
-    PyObject* transfer()
+    PyObject* transfer()noexcept
     {
         PyObject* r = _p;
         if(_p){
@@ -333,7 +343,7 @@ public:
     /** set attr.
      * @throw index_err
      */
-    void set_attr(const obj& a, const obj& v)const
+    void set_attr(const obj& a, const obj& v)
     {
         int r = PyObject_SetAttr(_p, a._p, v._p);
         if(r == -1)
@@ -343,7 +353,7 @@ public:
     /** set attr.
      * @throw index_err
      */
-    void set_attr(const char* a, const obj& v)const
+    void set_attr(const char* a, const obj& v)
     {
         int r = PyObject_SetAttrString(_p, a, v._p);
         if(r == -1)
@@ -353,7 +363,7 @@ public:
     /** del attr.
      * @throw index_err
      */
-    void del_attr(const obj& a)const
+    void del_attr(const obj& a)
     {
         int r = PyObject_DelAttr(_p, a._p);
         if(r == -1)
@@ -363,7 +373,7 @@ public:
     /** del attr.
      * @throw index_err
      */
-    void del_attr(const char* a)const
+    void del_attr(const char* a)
     {
         int r = PyObject_DelAttrString(_p, a);
         if(r == -1)
@@ -683,7 +693,7 @@ public:
     /** set_item.
      * @throw index_err
      */
-    void set_item(const obj& key, const obj& value)const
+    void set_item(const obj& key, const obj& value)
     {
         int r = PyObject_SetItem(_p, key._p, value._p);
         if(r == -1)

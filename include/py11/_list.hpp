@@ -2,7 +2,7 @@
  */
 class list: public seq{
 protected:
-    void type_check(PyObject* p)
+    void type_check(PyObject* p)noexcept(!PY11_ENFORCE)
     {
         if(PY11_ENFORCE && p){
             if(!PyList_Check(p))
@@ -10,7 +10,7 @@ protected:
         }
     }
     
-    void type_check(const obj& o)
+    void type_check(const obj& o)noexcept(!PY11_ENFORCE)
     {
         type_check((PyObject*)o.p());
     }
@@ -20,18 +20,34 @@ public:
      */
     list()=default;
     
-    list(const obj& o)
+    list(const obj& o)noexcept(!PY11_ENFORCE)
     {
         type_check(o);
         enter(o.p());
     }
     
-    list& operator=(const obj& o)
+    list& operator=(const obj& o)noexcept(!PY11_ENFORCE)
     {
         if(o.p()!=_p){
             type_check(o);
             release();
             enter(o.p());
+        }
+        return *this;
+    }
+
+    list(obj&& o)noexcept(!PY11_ENFORCE)
+    {
+        type_check(o);
+        _p = o.transfer();
+    }
+    
+    list& operator=(obj&& o)noexcept(!PY11_ENFORCE)
+    {
+        if(o.p()!=_p){
+            type_check(o);
+            release();
+            _p = o.transfer();
         }
         return *this;
     }
@@ -144,7 +160,7 @@ public:
     /** set_item.
      * @throw index_err
      */
-    void set_item(Py_ssize_t i, const obj& value)const
+    void set_item(Py_ssize_t i, const obj& value)
     {
         int r = PyList_SetItem(_p, i, value.p());
         if(r == -1)
