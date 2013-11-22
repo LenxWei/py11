@@ -20,7 +20,7 @@ int main(int argc, char** argv)
         
     cout << ">> tuple" << endl;
     
-    py::obj y = {"abc", 2, 0L, 1, 3};
+    py::seq y = {"abc", 2, 0L, 1, 3};
     cout << y << ":" << y.size() << endl;
     
     cout << y.type() << endl;
@@ -60,15 +60,23 @@ int main(int argc, char** argv)
     
     {
         cout << ">> list" << endl;
-        py::obj l = py::list({{0, "abc"}, 22});
+        py::list l = {{0, "abc"}, 22};
         cout << l << endl;
         for(auto &x: l){
             cout << x.refcnt() << endl;
         }
-        l.a("sort")();
+        l.sort();
         cout << "sorted: " << l << endl;
-        
+        l.append(33);
+        l.insert(1,44);
+        cout << "modified: " << l << endl;
+        l.reverse();
+        cout << "reverse: " << l << endl;
+        cout << "[2:4]: " <<l.sub(2,4) << endl;
         cout << "22 in l: " << l.has(22) << endl;
+        cout << "l * 2: " << l*2 << endl;
+        l *=3;
+        cout << "l*=3: " << l << endl;
     }
     
     {

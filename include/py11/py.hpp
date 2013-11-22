@@ -5,75 +5,13 @@
 #include <initializer_list>
 #include <limits>
 
+#ifndef PY11_ENFORCE
+#define PY11_ENFORCE 1
+#endif
+
 namespace py {
 
-/* exceptions
-************/
-
-/** exception: err.
- */
-class err: public std::exception{
-protected:
-    const char* _what;
-public:
-    err():_what(NULL)
-    {}
-    
-    err(const char* what):_what(what)
-    {}
-    
-    virtual const char* what()const noexcept
-    {
-        return _what;
-    }
-};
-
-
-/** exception: index_err.
- */
-class index_err: public err{
-public:
-    index_err(const char* what):err(what)
-    {}
-};
-
-/** exception: type_err.
- */
-class type_err: public err{
-public:
-    type_err(const char* what):err(what)
-    {}
-};
-
-/** exception: val_err.
- */
-class val_err: public err{
-public:
-    val_err(const char* what):err(what)
-    {}
-};
-
-/* py system utils
-*****************/
-
-/** init the py lib
- * @param program_name usually use argv[0]
- */
-inline void init(char* program_name = NULL)
-{
-    if(program_name){
-        Py_SetProgramName(program_name);
-    }
-    Py_Initialize();
-}
-
-/** finalize the py lib
- */
-inline void fini()
-{
-    Py_Finalize();
-}
-
+#include "_err.hpp"
 
 /* assistant classes
 *******************/
@@ -104,7 +42,7 @@ public:
 /** wrapper of PyObject.
  */
 class obj{
-friend obj list(std::initializer_list<obj> l);
+friend class list;
 protected:
     PyObject* _p;
 
@@ -210,6 +148,18 @@ public:
             Py_DECREF(_p);
             _p = NULL;
         }
+    }
+    
+    /** transfer the ownership of inner object.
+     * @return the current PyObject*
+     */
+    PyObject* transfer()
+    {
+        PyObject* r = _p;
+        if(_p){
+            _p = NULL;
+        }
+        return r;
     }
     
     /** test null.
@@ -515,32 +465,6 @@ public:
         return r;
     }
     
-    /** op +.
-     * @throw type_err
-     */
-    obj operator + (const obj& o)const
-    {
-        if(PySequence_Check(_p)){     
-            obj r = PySequence_Concat(_p, o._p);
-            if(!r.is_null())
-                return r;
-        }
-        throw type_err("op + failed");        
-    }
-    
-    /** op +=.
-     * @throw type_err
-     */
-    obj& operator +=(const obj& o)
-    {
-        if(PySequence_Check(_p)){     
-            obj r = PySequence_InPlaceConcat(_p, o._p);
-            if(!r.is_null())
-                return *this;
-        }
-        throw type_err("op += failed");        
-    }
-    
     /** op &.
      * @throw type_err
      */
@@ -742,61 +666,6 @@ public:
         }
         throw type_err("has failed");
     }
-
-    /** seq find a item.
-     * @return index if found, -1 otherwise
-     * @throw type_err
-     */
-    long find(const obj& o)const
-    {
-        if(PySequence_Check(_p)){        
-            long r = PySequence_Index(_p, o._p);
-            return r;
-        }
-        throw type_err("index failed");
-    }
-    
-    /** seq index.
-     * @return index if found
-     * @throw index_err if not found
-     * @throw type_err
-     */
-    long index(const obj& o)const
-    {
-        if(PySequence_Check(_p)){        
-            long r = PySequence_Index(_p, o._p);
-            if(r == -1)
-                throw index_err("index failed");
-            return r;
-        }
-        throw type_err("index failed");
-    }
-
-    /** get a list clone.
-     * @throw type_err
-     */    
-    obj to_list()const
-    {
-        if(PySequence_Check(_p)){        
-            obj r = PySequence_List(_p);
-            if(!r.is_null())
-                return r;
-        }
-        throw type_err("to_list failed");
-    }
-    
-    /** get a tuple clone.
-     * @throw type_err
-     */    
-    obj to_tuple()const
-    {
-        if(PySequence_Check(_p)){        
-            obj r = PySequence_Tuple(_p);
-            if(!r.is_null())
-                return r;
-        }
-        throw type_err("to_tuple failed");
-    }
         
     /** get item.
      * Warning, a new obj will be got! not a reference to the original one!
@@ -829,17 +698,6 @@ public:
         int r = PyObject_DelItem(_p, key._p);
         if(r == -1)
             throw index_err("del_item failed");
-    }
-    
-    /** slice, [i:j].
-     * @throw type_err
-     */
-    obj sub(int i, int j = std::numeric_limits<int>::max())const
-    {
-        PyObject* p = PySequence_GetSlice(_p, i, j);
-        if(!p)
-            throw type_err("sub failed");
-        return p;
     }
     
     /** get the begin iter.
@@ -883,55 +741,6 @@ public:
         
 };
 
-/** iter for the c++11 range loop.
- */
-class iter{
-private:
-    obj _it;
-    obj _v;
-    bool _fin;
-public:
-    iter():_fin(true)
-    {}
-    
-    /** create iter from obj.
-     * @throw type_err
-     */
-    iter(const obj& o):_it(PyObject_GetIter(o.p())), _fin(false)
-    {
-        if(_it.is_null())
-            throw type_err("iter ctor failed");
-        ++(*this);
-    }
-    
-    /** operator ++.
-     */
-    iter& operator++()
-    {
-        _v = obj(PyIter_Next(_it.p()));
-        if(_v.is_null())
-            _fin = true;
-        return *this;
-    }
-    
-    /** operator *.
-     */
-    obj& operator*()
-    {
-        return _v;
-    }
-    
-    bool operator==(const iter& i)const
-    {
-        return (i._it == _it) || (i._fin && _fin);
-    }
-
-    bool operator!=(const iter& i)const
-    {
-        return !(*this == i);
-    }
-
-};
 
 /** ostream output
  */
@@ -941,47 +750,11 @@ inline std::ostream& operator <<(std::ostream& s, const obj& o)
     return s;
 }
 
-/** py import.
- * @throw val_err
- */
-inline obj import(const char* module_name)
-{
-    PyObject* p = PyImport_ImportModule(module_name);
-    if(p == NULL)
-        throw val_err("py import () failed");
-    return p;
-}
-
-/** py list.
- */
-inline obj list(std::initializer_list<obj> l)
-{
-    obj o = PyList_New(l.size());
-    long i = 0;
-    for(auto &x: l){
-        PyList_SET_ITEM(o.p(), i++, x.p());
-        x.__reset();
-    }
-    return o;
-}
-
-/** py set.
- * @throw type_err
- */
-inline obj set(const obj& o = obj() )
-{
-    obj s = PySet_New(o.p());
-    if(s.is_null())
-        throw type_err("creating set failed");
-    return s;
-}
-
-/** py dict.
- */
-inline obj dict()
-{
-    return PyDict_New();
-}
+#include "_iter.hpp"
+#include "_seq.hpp"
+#include "_list.hpp"
+#include "_set.hpp"
+#include "_dict.hpp"
 
 // implementation
 
@@ -994,5 +767,7 @@ inline iter obj::begin()const
 {
     return iter(*this);
 }
+
+#include "_sys.hpp"
 
 }; // ns py
