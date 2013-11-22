@@ -173,7 +173,7 @@ public:
     /** get a list clone.
      * @throw type_err
      */    
-    obj to_list()const
+    seq to_list()const
     {
         PyObject* r = PySequence_List(_p);
         if(r)
@@ -184,7 +184,7 @@ public:
     /** get a tuple clone.
      * @throw type_err
      */    
-    obj to_tuple()const
+    seq to_tuple()const
     {
         PyObject* r = PySequence_Tuple(_p);
         if(r)

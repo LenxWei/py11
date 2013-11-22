@@ -202,10 +202,12 @@ public:
      */
     obj pop()
     {
-        PyObject* r = PySet_Pop(_p);
-        if(!r)
-            throw index_err("set pop failed");
-        return r;
+        if(_p){
+            PyObject* r = PySet_Pop(_p);
+            if(r)
+                return r;
+        }
+        throw index_err("set pop failed");
     }
     
     /** add elements from an iterable object.
@@ -221,7 +223,8 @@ public:
      */
     void clear()
     {
-        PySet_Clear(_p);
+        if(_p)
+            PySet_Clear(_p);
     }
 
 };

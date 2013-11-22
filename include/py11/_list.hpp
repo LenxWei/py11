@@ -150,7 +150,7 @@ public:
     /** get a tuple clone.
      * @throw type_err
      */    
-    obj to_tuple()const
+    seq to_tuple()const
     {
         PyObject* r = PyList_AsTuple(_p);
         if(r)
