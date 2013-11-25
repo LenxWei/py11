@@ -715,10 +715,25 @@ inline std::ostream& operator <<(std::ostream& s, const obj& o)
     return s;
 }
 
-/** iterable
+/* sub types
 ***********/
 
 #include "_iter.hpp"
+
+#include "_seq.hpp"
+#include "_tuple.hpp"
+#include "_list.hpp"
+
+#include "_num.hpp"
+#include "_set.hpp"
+
+#include "_dict.hpp"
+
+
+/* implementation
+****************/
+
+#include "_sys.hpp"
 
 inline iter obj::end()const
 {
@@ -730,18 +745,23 @@ inline iter obj::begin()const
     return iter(*this);
 }
 
+inline list seq::to_list()const
+{
+    PyObject* r = PySequence_List(_p);
+    if(r)
+        return r;
+    throw type_err("to_list failed");
+}
 
-#include "_seq.hpp"
-#include "_tuple.hpp"
-#include "_list.hpp"
-
-#include "_num.hpp"
-#include "_set.hpp"
-
-#include "_dict.hpp"
-
-// implementation
-
-#include "_sys.hpp"
+/** get a tuple clone.
+ * @throw type_err
+ */    
+inline tuple seq::to_tuple()const
+{
+    PyObject* r = PySequence_Tuple(_p);
+    if(r)
+        return r;
+    throw type_err("to_tuple failed");
+}
 
 }; // ns py

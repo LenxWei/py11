@@ -1,5 +1,8 @@
 /** seq object
  */
+class tuple;
+class list;
+
 class seq: public obj{
 protected:
     void type_check(PyObject* p)noexcept(!PY11_ENFORCE)
@@ -173,24 +176,12 @@ public:
     /** get a list clone.
      * @throw type_err
      */    
-    seq to_list()const
-    {
-        PyObject* r = PySequence_List(_p);
-        if(r)
-            return r;
-        throw type_err("to_list failed");
-    }
+    inline list to_list()const;
     
     /** get a tuple clone.
      * @throw type_err
      */    
-    seq to_tuple()const
-    {
-        PyObject* r = PySequence_Tuple(_p);
-        if(r)
-            return r;
-        throw type_err("to_tuple failed");
-    }
+    inline tuple to_tuple()const;
         
     /** get item.
      * Warning, a new obj will be got! not a reference to the original one!
