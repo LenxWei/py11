@@ -17,10 +17,12 @@ int main(int argc, char** argv)
     
     // consts
     cout << "True: " << py::obj(Py_True) << endl;
+    cout << "False: " << py::obj(Py_False) << endl;
+    cout << "None: " << py::obj(Py_None) << endl;
         
     cout << ">> tuple" << endl;
     
-    py::seq y = {"abc", 2, 0L, 1, 3};
+    py::tuple y = {"abc", 2, 0L, 1, 3};
     cout << y << ":" << y.size() << endl;
     
     cout << y.type() << endl;
@@ -34,12 +36,22 @@ int main(int argc, char** argv)
     
     {
         cout << ">> dict" << endl;
-        py::obj z = py::dict();
+        py::dict z({});
         
         z.set_item(1, "abc");
         z.set_item("def", 2);
         cout << z << endl;
         cout << "items: " << z.a("items")() << endl;
+        cout << "items == a(\"items\"): " << (z.a("items")() == z.items()) << endl;       
+        cout << "keys == a(\"keys\"): " << (z.a("keys")() == z.keys()) << endl;       
+        cout << "values == a(\"values\"): " << (z.a("values")() == z.values()) << endl;       
+        py::dict z1({{1,"abc"}, {"def", 2}});
+        cout << z1 << endl;
+        py::dict z2;
+        z2={{3,"a"}, {4,"b"}};
+        cout << z2 << endl;
+        z1.update(z2);
+        cout << "update: " << z1 << endl;
     }
 
     {

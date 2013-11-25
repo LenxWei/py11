@@ -1,12 +1,12 @@
-/** py list.
+/** py tuple.
  */
-class list: public seq{
+class tuple: public seq{
 protected:
     void type_check(PyObject* p)noexcept(!PY11_ENFORCE)
     {
         if(PY11_ENFORCE && p){
-            if(!PyList_Check(p))
-                throw type_err("creating list failed");
+            if(!PyTuple_Check(p))
+                throw type_err("creating tuple failed");
         }
     }
     
@@ -18,15 +18,15 @@ protected:
 public:
     /** ctor.
      */
-    list()=default;
+    tuple()=default;
     
-    list(const obj& o)noexcept(!PY11_ENFORCE)
+    tuple(const obj& o)noexcept(!PY11_ENFORCE)
     {
         type_check(o);
         enter(o.p());
     }
     
-    list& operator=(const obj& o)noexcept(!PY11_ENFORCE)
+    tuple& operator=(const obj& o)noexcept(!PY11_ENFORCE)
     {
         if(o.p()!=_p){
             type_check(o);
@@ -36,13 +36,13 @@ public:
         return *this;
     }
 
-    list(obj&& o)noexcept(!PY11_ENFORCE)
+    tuple(obj&& o)noexcept(!PY11_ENFORCE)
     {
         type_check(o);
         _p = o.transfer();
     }
     
-    list& operator=(obj&& o)noexcept(!PY11_ENFORCE)
+    tuple& operator=(obj&& o)noexcept(!PY11_ENFORCE)
     {
         if(o.p()!=_p){
             type_check(o);
@@ -56,7 +56,7 @@ public:
      * in most of cases, need not to inc ref.
      * please read python doc carefully
      */
-    list(PyObject* p, bool borrowed = false)
+    tuple(PyObject* p, bool borrowed = false)
     {
         type_check(p);
         _p = p;
@@ -64,7 +64,7 @@ public:
             Py_XINCREF(_p);
     }
     
-    list& operator=(PyObject* p)
+    tuple& operator=(PyObject* p)
     {
         if(p!=_p){
             type_check(p);
@@ -76,25 +76,25 @@ public:
 
     /** ctor.
      */
-    list(std::initializer_list<obj> l)
+    tuple(std::initializer_list<obj> l)
     {
-        _p = PyList_New(l.size());
+        _p = PyTuple_New(l.size());
         long i = 0;
         for(auto &x: l){
-            PyList_SET_ITEM(_p, i++, x.p());
+            PyTuple_SET_ITEM(_p, i++, x.p());
             x.__reset();
         }
     }
 
     /** = {...}
      */
-    list& operator = (std::initializer_list<obj> l)
+    tuple& operator = (std::initializer_list<obj> l)
     {
         release();
-        _p = PyList_New(l.size());
+        _p = PyTuple_New(l.size());
         long i = 0;
         for(auto &x: l){
-            PyList_SET_ITEM(_p, i++, x.p());
+            PyTuple_SET_ITEM(_p, i++, x.p());
             x.__reset();
         }
         return *this;
@@ -107,7 +107,7 @@ public:
      */
     long size()const
     {
-        long r = PyList_Size(_p);
+        long r = PyTuple_Size(_p);
         if(r != -1)
             return r;
         throw type_err("len failed");
@@ -124,7 +124,7 @@ public:
         throw type_err("has failed");
     }
 
-    /** list find a item.
+    /** tuple find a item.
      * @return index if found, -1 otherwise
      * @throw type_err
      */
@@ -134,7 +134,7 @@ public:
         return r;
     }
     
-    /** list index.
+    /** tuple index.
      * @return index if found
      * @throw index_err if not found
      * @throw type_err
@@ -147,85 +147,28 @@ public:
         return r;
     }
 
-    /** get a tuple clone.
-     * @throw type_err
-     */    
-    tuple to_tuple()const
-    {
-        PyObject* r = PyList_AsTuple(_p);
-        if(r)
-            return r;
-        throw type_err("to_tuple failed");
-    }
-
     /** get item.
      * Warning, a new obj will be got! not a reference to the original one!
      * @throw index_err
      */
     const obj operator [](Py_ssize_t i)const
     {
-        PyObject* p = PyList_GetItem(_p, i);
+        PyObject* p = PyTuple_GetItem(_p, i);
         if(!p){
             throw index_err("non-existing item");
         }
-        return p;
+        return obj(p, 1);
     }
     
-    /** set_item.
-     * @throw index_err
-     */
-    void set_item(Py_ssize_t i, const obj& value)
-    {
-        int r = PyList_SetItem(_p, i, value.p());
-        if(r == -1)
-            throw index_err("set_item failed");
-    }
-        
     /** slice, [i:j].
      * @throw type_err
      */
     obj sub(int i, int j = std::numeric_limits<int>::max())const
     {
-        PyObject* p = PyList_GetSlice(_p, i, j);
+        PyObject* p = PyTuple_GetSlice(_p, i, j);
         if(!p)
             throw type_err("sub failed");
         return p;
-    }
-    
-    /** sort in place.
-     */
-    void sort()
-    {
-        int r = PyList_Sort(_p);
-        if(r == -1)
-            throw err("sort failed");
-    }
-
-    /** reverse in place.
-     */
-    void reverse()
-    {
-        int r = PyList_Reverse(_p);
-        if(r == -1)
-            throw err("reverse failed");
-    }
-    
-    /** append.
-     */
-    void append(const obj& o)
-    {
-        int r = PyList_Append(_p, o.p());
-        if(r == -1)
-            throw err("append failed");
-    }
-    
-    /** insert.
-     */
-    void insert(Py_ssize_t index, const obj& o)
-    {
-        int r = PyList_Insert(_p, index, o.p());
-        if(r == -1)
-            throw err("insert failed");
     }
 };
 

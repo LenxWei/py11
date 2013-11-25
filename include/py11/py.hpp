@@ -42,6 +42,7 @@ public:
 /** wrapper of PyObject.
  */
 class obj{
+friend class tuple;
 friend class list;
 friend class set;
 protected:
@@ -263,10 +264,18 @@ public:
      */
     const char* c_str()const
     {
-        const char* p = PyString_AsString(_p);
-        if(!p)
+        const char* p;
+        if(PyString_Check(_p)){
+            p = PyString_AsString(_p);
+        }
+        else if(PyUnicode_Check(_p)){
+            p = PyUnicode_AS_DATA(_p);
+        }
+        else if(PyByteArray_Check(_p)){
+            p = PyByteArray_AsString(_p);
+        }
+        else
             throw type_err("c_str failed");
-        
         return p;
     }
 
@@ -706,16 +715,10 @@ inline std::ostream& operator <<(std::ostream& s, const obj& o)
     return s;
 }
 
+/** iterable
+***********/
+
 #include "_iter.hpp"
-#include "_seq.hpp"
-#include "_list.hpp"
-
-#include "_num.hpp"
-#include "_set.hpp"
-
-#include "_dict.hpp"
-
-// implementation
 
 inline iter obj::end()const
 {
@@ -726,6 +729,18 @@ inline iter obj::begin()const
 {
     return iter(*this);
 }
+
+
+#include "_seq.hpp"
+#include "_tuple.hpp"
+#include "_list.hpp"
+
+#include "_num.hpp"
+#include "_set.hpp"
+
+#include "_dict.hpp"
+
+// implementation
 
 #include "_sys.hpp"
 
