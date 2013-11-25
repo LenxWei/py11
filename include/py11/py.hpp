@@ -1,3 +1,6 @@
+#ifndef PY11_PY_HPP
+#define PY11_PY_HPP
+
 #include <Python.h>
 #include <iostream>
 #include <exception>
@@ -753,9 +756,6 @@ inline list seq::to_list()const
     throw type_err("to_list failed");
 }
 
-/** get a tuple clone.
- * @throw type_err
- */    
 inline tuple seq::to_tuple()const
 {
     PyObject* r = PySequence_Tuple(_p);
@@ -765,3 +765,5 @@ inline tuple seq::to_tuple()const
 }
 
 }; // ns py
+
+#endif // PY11_PY_HPP
