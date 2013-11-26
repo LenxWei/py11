@@ -515,7 +515,7 @@ public:
     /** str.
      * @throw val_err
      */
-    obj str()const
+    obj to_str()const
     {
         PyObject* p = PyObject_Str(_p);
         if(p == NULL){
@@ -527,7 +527,7 @@ public:
     /** unicode.
      * @throw val_err
      */
-    obj unicode()const
+    obj to_unicode()const
     {
         PyObject* p = PyObject_Unicode(_p);
         if(p == NULL)
@@ -548,7 +548,7 @@ public:
             s << p;
         }
         else{
-            s << str().c_str();
+            s << to_str().c_str();
         }
     }
 
@@ -726,12 +726,14 @@ inline std::ostream& operator <<(std::ostream& s, const obj& o)
 #include "_seq.hpp"
 #include "_tuple.hpp"
 #include "_list.hpp"
+#include "_str.hpp"
+
+#include "_file.hpp"
 
 #include "_num.hpp"
 #include "_set.hpp"
 
 #include "_dict.hpp"
-
 
 /* implementation
 ****************/

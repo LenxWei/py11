@@ -92,7 +92,31 @@ int main(int argc, char** argv)
         l *=3;
         cout << "l*=3: " << l << endl;
     }
-    
+    {
+        cout << ">> str" << endl;
+        py::str a="adfaf";
+        cout << a << endl;
+        cout << a.a("replace")("a","_") << endl;
+        for(auto& x: a){
+            cout << x << ", ";
+        }
+        cout << endl;
+        cout << a[1] << " " << a.sub(1,4) << endl;
+        a = "%d";
+        cout << (a % py::obj({1}) ) << endl;
+    }
+    {
+        cout << ">> file" << endl;
+        py::file f("test/test.cpp","rb");
+        int cnt = 0;
+        while(1){
+            py::str line = f.readline();
+            cnt ++;
+            if(line.size() == 0)
+                break;
+        }
+        cout << "line count: " << cnt << endl;
+    }
     {
         cout << ">> ref count tests" << endl;
         py::obj z = y[1];

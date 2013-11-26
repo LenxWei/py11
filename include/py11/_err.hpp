@@ -43,3 +43,20 @@ public:
     val_err(const char* what):err(what)
     {}
 };
+
+/** exception: io_err.
+ */
+class io_err: public err{
+public:
+    io_err(const char* what):err(what)
+    {}
+};
+
+/** exception: eof_err.
+ */
+class eof_err: public io_err{
+public:
+    eof_err(const char* what):io_err(what)
+    {}
+};
+
