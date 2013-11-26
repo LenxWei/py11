@@ -80,7 +80,7 @@ public:
     /** ctor.
      * @throw val_err
      */
-    file(const char* fn, const char* mode)
+    file(const char* fn, const char* mode = "r")
     {
         _p = PyFile_FromString((char*)fn, (char*)mode);
         if(!_p)
