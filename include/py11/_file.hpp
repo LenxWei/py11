@@ -7,7 +7,7 @@ protected:
     {
         if(PY11_ENFORCE && p){
             if(!PyFile_Check(p))
-                throw type_err("creating file failed");
+                throw type_err("file ctor failed");
         }
     }
     
@@ -84,7 +84,7 @@ public:
     {
         _p = PyFile_FromString((char*)fn, (char*)mode);
         if(!_p)
-            throw val_err("creating file failed");
+            throw val_err("file ctor failed");
     }
 
     /** readline
