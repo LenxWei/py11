@@ -3,10 +3,14 @@
 
 using namespace std;
 
+//py::list a;
+
 int main(int argc, char** argv)
 {
-    py::init(argv[0]);
-    
+    //py::init(argv[0]);
+
+//	cout << a << endl;
+
     // import
     auto t = py::import("time");
     auto time = t.attr("time");
@@ -132,5 +136,4 @@ int main(int argc, char** argv)
         z.release();
         assert( z1.refcnt() == refcnt - 1);
     }
-    py::fini();
 }

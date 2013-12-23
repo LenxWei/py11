@@ -44,12 +44,22 @@ namespace details{
 	public:
 		py_initer()
 		{
+			//std::cout << ">>>>> init" << std::endl;
 			Py_Initialize();
 		}
 
 		~py_initer()
 		{
 			Py_Finalize();
+			//std::cout << ">>>>> fini" << std::endl;
+		}
+	};
+
+	class py_initer_wrap{
+	public:
+		py_initer_wrap()
+		{
+			static py_initer __init;
 		}
 	};
 };
@@ -59,12 +69,10 @@ namespace details{
 
 /** wrapper of PyObject.
  */
-class obj{
+class obj : private details::py_initer_wrap{
 friend class tuple;
 friend class list;
 friend class set;
-private:
-	static details::py_initer __init;
 
 protected:
 
