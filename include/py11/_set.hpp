@@ -1,3 +1,5 @@
+namespace py{
+
 /** set object
  */
 class set: public num{
@@ -229,3 +231,4 @@ public:
 
 };
 
+}; // ns py

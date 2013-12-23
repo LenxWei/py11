@@ -1,3 +1,5 @@
+namespace py{
+
 /** py list.
  */
 class list: public seq{
@@ -228,4 +230,6 @@ public:
             throw err("insert failed");
     }
 };
+
+}; // ns py
 

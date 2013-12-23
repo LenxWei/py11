@@ -1,3 +1,5 @@
+namespace py{
+
 /** py dict.
  */
 class dict: public obj{
@@ -221,3 +223,5 @@ public:
     }
 };
 
+
+}; // py

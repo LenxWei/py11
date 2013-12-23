@@ -1,3 +1,5 @@
+namespace py{
+
 /** file object
  */
 
@@ -129,4 +131,6 @@ public:
             throw io_err("write failed");
     }
 };
+
+}; // ns py
 

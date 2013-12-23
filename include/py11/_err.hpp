@@ -1,3 +1,5 @@
+namespace py{
+
 /* exceptions
 ************/
 
@@ -60,3 +62,4 @@ public:
     {}
 };
 
+}; // ns py

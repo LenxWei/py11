@@ -1,3 +1,5 @@
+namespace py {
+
 /** iter for the c++11 range loop.
  */
 class iter{
@@ -47,3 +49,7 @@ public:
     }
 
 };
+
+
+}; // ns py
+

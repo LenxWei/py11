@@ -1,3 +1,5 @@
+namespace py{
+
 /** py str.
  */
 class str: public seq{
@@ -199,3 +201,4 @@ public:
     }
 };
 
+}; // ns py

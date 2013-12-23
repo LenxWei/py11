@@ -12,9 +12,9 @@
 #define PY11_ENFORCE 1
 #endif
 
-namespace py {
-
 #include "_err.hpp"
+
+namespace py {
 
 /* assistant classes
 *******************/
@@ -745,6 +745,8 @@ inline std::ostream& operator <<(std::ostream& s, const obj& o)
     return s;
 }
 
+}; //ns py
+
 /* sub types
 ***********/
 
@@ -766,6 +768,8 @@ inline std::ostream& operator <<(std::ostream& s, const obj& o)
 ****************/
 
 #include "_sys.hpp"
+
+namespace py {
 
 inline iter obj::end()const
 {

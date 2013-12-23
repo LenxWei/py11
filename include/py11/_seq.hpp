@@ -1,3 +1,5 @@
+namespace py{
+
 /** seq object
  */
 class tuple;
@@ -228,3 +230,4 @@ public:
     }    
 };
 
+}; // ns py

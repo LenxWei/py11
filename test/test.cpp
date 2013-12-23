@@ -7,7 +7,7 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-    //py::init(argv[0]);
+    //py::set_prog(argv[0]);
 
 //	cout << a << endl;
 

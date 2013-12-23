@@ -1,3 +1,5 @@
+namespace py{
+
 /* py system utils
 *****************/
 
@@ -23,3 +25,5 @@ inline obj import(const char* module_name)
         throw val_err("py import () failed");
     return p;
 }
+
+}; // ns py
