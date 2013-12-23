@@ -52,6 +52,9 @@ int main(int argc, char** argv)
         cout << z2 << endl;
         z1.update(z2);
         cout << "update: " << z1 << endl;
+        for(auto& x : z1){
+            cout << x << endl;
+        }
     }
 
     {

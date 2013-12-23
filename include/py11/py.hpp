@@ -39,6 +39,21 @@ public:
     }
 };
 
+namespace details{
+	class py_initer{
+	public:
+		py_initer()
+		{
+			Py_Initialize();
+		}
+
+		~py_initer()
+		{
+			Py_Finalize();
+		}
+	};
+};
+
 /* main class
 ************/
 
@@ -48,7 +63,11 @@ class obj{
 friend class tuple;
 friend class list;
 friend class set;
+private:
+	static details::py_initer __init;
+
 protected:
+
     PyObject* _p;
 
     void __reset()const
