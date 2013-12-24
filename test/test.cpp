@@ -5,7 +5,8 @@ using namespace std;
 
 //py::list a;
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
 	try {
 		//py::set_prog(argv[0]);
 
