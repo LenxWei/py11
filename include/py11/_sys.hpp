@@ -13,6 +13,14 @@ inline void set_prog(char* program_name = NULL)
     }
 }
 
+/** py print err to stderr.
+ */
+inline void print_err(int set_sys_last_vars=1)
+{
+	if(PyErr_Occurred())
+		PyErr_PrintEx(set_sys_last_vars);
+}
+
 /** py import.
  * @throw val_err
  */
