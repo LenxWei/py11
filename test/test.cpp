@@ -117,7 +117,7 @@ int main(int argc, char** argv)
 		}
 		{
 			cout << ">> file" << endl;
-			py::file f("test/test.cpp", "rb");
+			py::file f("test.cpp", "rb");
 			int cnt = 0;
 			while (1) {
 				py::str line = f.readline();
