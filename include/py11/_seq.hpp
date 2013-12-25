@@ -1,10 +1,10 @@
 namespace py{
 
-/** seq object
- */
 class tuple;
 class list;
 
+/** seq object
+ */
 class seq: public obj{
 protected:
     void type_check(PyObject* p)noexcept(!PY11_ENFORCE)

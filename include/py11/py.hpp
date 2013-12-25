@@ -64,9 +64,6 @@ namespace details{
 	};
 };
 
-/* main class
-************/
-
 /** wrapper of PyObject.
  */
 class obj : private details::py_initer_wrap{

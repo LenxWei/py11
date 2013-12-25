@@ -3,6 +3,12 @@ namespace py{
 /* py system utils
 *****************/
 
+/**
+ * @addtogroup utils
+ * Utility functoins
+ * @{
+ */
+
 /** set the main prog for pylib
  * @param program_name usually use argv[0]
  */
@@ -14,6 +20,7 @@ inline void set_prog(char* program_name = NULL)
 }
 
 /** py print err to stderr.
+ * print python's error message and stack information.
  */
 inline void print_err(int set_sys_last_vars=1)
 {
@@ -33,5 +40,9 @@ inline obj import(const char* module_name)
         throw val_err("py import () failed");
     return p;
 }
+
+/**
+ * @}
+ */
 
 }; // ns py
