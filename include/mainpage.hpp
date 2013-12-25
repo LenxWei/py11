@@ -8,8 +8,6 @@
 * The git repository is at https://github.com/LenxWei/py11.
 *
 * @section install Install
-* Download site:
-* - https://github.com/LenxWei/py11/downloads
 *
 * Need a compiler supporting c++11, such as gcc 4.7, clang 3.2 or higher.<br>
 *
