@@ -19,7 +19,7 @@
 * You can find documents about wrapper classes <a href="hierarchy.html">here</a>, and python utils <a href="modules.html">here</a>.
 * <hr>
 * @todo add tutorial
-# @todo add exception handling
+* @todo add exception handling
 *
 * @defgroup utils Python utils
 * Utility functoins.
