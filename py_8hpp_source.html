@@ -25,7 +25,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Py11
-   &#160;<span id="projectnumber">v0.1</span>
+   &#160;<span id="projectnumber">v0.2</span>
    </div>
    <div id="projectbrief">This is a minimalist Python wrapper for C++11.</div>
   </td>
@@ -285,20 +285,20 @@ $(document).ready(function(){initNavTree('py_8hpp_source.html','');});
 <div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    <span class="comment"></span></div>
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;<span class="comment">    /** test null.</span></div>
 <div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00217"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#ade996cd5fa067ea3897ffb6fcae304a2">  217</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classpy_1_1obj.html#ade996cd5fa067ea3897ffb6fcae304a2">is_null</a>()<span class="keyword">const</span></div>
+<div class="line"><a name="l00217"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#aeb9b086a1f1298e2b2dea354264b9d99">  217</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classpy_1_1obj.html#aeb9b086a1f1298e2b2dea354264b9d99">operator !</a>()<span class="keyword">const</span></div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        <span class="keywordflow">return</span> _p == NULL;</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        <span class="keywordflow">return</span> !_p;</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    }</div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    </div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    <span class="comment">// cast</span></div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <span class="comment"></span></div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="comment">    /** is false</span></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="comment">    /**</span></div>
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="comment">     */</span>    </div>
-<div class="line"><a name="l00226"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#aeb9b086a1f1298e2b2dea354264b9d99">  226</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classpy_1_1obj.html#aeb9b086a1f1298e2b2dea354264b9d99">operator !</a>()<span class="keyword">const</span></div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    <span class="keywordtype">bool</span> py_not()<span class="keyword">const</span></div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;<span class="keyword">    </span>{</div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;        <span class="keywordflow">return</span> (!_p) || PyObject_Not(_p);</div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    }</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    <span class="comment"></span></div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="comment"></span></div>
 <div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="comment">    /** int.</span></div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;<span class="comment">     */</span></div>
 <div class="line"><a name="l00233"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#a45f965a2d3efcb60fec8d5a857f62422">  233</a></span>&#160;    <a class="code" href="classpy_1_1obj.html#a45f965a2d3efcb60fec8d5a857f62422">obj</a>(<span class="keywordtype">int</span> i):_p(PyInt_FromLong(i))</div>
@@ -397,7 +397,7 @@ $(document).ready(function(){initNavTree('py_8hpp_source.html','');});
 <div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;<span class="comment">     */</span></div>
 <div class="line"><a name="l00327"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#aac3dce08adb9f8aad77ad0ae42d8f168">  327</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classpy_1_1obj.html#aac3dce08adb9f8aad77ad0ae42d8f168">is_a</a>(<span class="keyword">const</span> <a class="code" href="classpy_1_1obj.html">obj</a>&amp; t)<span class="keyword">const</span></div>
 <div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;        <span class="keywordflow">if</span>(t.<a class="code" href="classpy_1_1obj.html#ade996cd5fa067ea3897ffb6fcae304a2">is_null</a>())</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;        <span class="keywordflow">if</span>(!t)</div>
 <div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classpy_1_1type__err.html">type_err</a>(<span class="stringliteral">&quot;is_a with null type&quot;</span>);</div>
 <div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;            </div>
 <div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;        <span class="keywordtype">int</span> r = PyObject_TypeCheck(_p, t._p-&gt;ob_type);</div>
@@ -667,256 +667,267 @@ $(document).ready(function(){initNavTree('py_8hpp_source.html','');});
 <div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;        <span class="keywordflow">return</span> r;</div>
 <div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;    }</div>
 <div class="line"><a name="l00598"></a><span class="lineno">  598</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;<span class="comment">    /** call with key/value pairs.</span></div>
+<div class="line"><a name="l00599"></a><span class="lineno">  599</span>&#160;<span class="comment">    /** call with args.</span></div>
 <div class="line"><a name="l00600"></a><span class="lineno">  600</span>&#160;<span class="comment">     * @throw type_err</span></div>
 <div class="line"><a name="l00601"></a><span class="lineno">  601</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00602"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#adf750198e57d3f97fad5c9f71f45c0a2">  602</a></span>&#160;    <a class="code" href="classpy_1_1obj.html">obj</a> <a class="code" href="classpy_1_1obj.html#adf750198e57d3f97fad5c9f71f45c0a2">call</a>(<span class="keyword">const</span> <a class="code" href="classpy_1_1obj.html">obj</a>&amp; args, <span class="keyword">const</span> <a class="code" href="classpy_1_1obj.html">obj</a>&amp; kw)<span class="keyword">const</span></div>
+<div class="line"><a name="l00602"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#ae6301181d8ce7e2f723aeebe291364af">  602</a></span>&#160;    <a class="code" href="classpy_1_1obj.html">obj</a> <a class="code" href="classpy_1_1obj.html#ae6301181d8ce7e2f723aeebe291364af">call</a>(<span class="keyword">const</span> <a class="code" href="classpy_1_1obj.html">obj</a>&amp; args)<span class="keyword">const</span></div>
 <div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;        PyObject* r = PyObject_Call(_p, args._p, kw._p);</div>
+<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;        PyObject* r = PyObject_CallObject(_p, args._p);</div>
 <div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;        <span class="keywordflow">if</span>(r == NULL)</div>
 <div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classpy_1_1type__err.html">type_err</a>(<span class="stringliteral">&quot;call failed&quot;</span>);</div>
 <div class="line"><a name="l00607"></a><span class="lineno">  607</span>&#160;        <span class="keywordflow">return</span> r;</div>
 <div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;    }</div>
-<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;        </div>
-<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;    <span class="comment">// container methods</span></div>
-<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;    <span class="comment"></span></div>
-<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;<span class="comment">    /** &#39;len&#39; as &#39;size&#39;.</span></div>
-<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;<span class="comment">     * @throw type_err</span></div>
-<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00615"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#a897294eef3134f10fd7b553907577211">  615</a></span>&#160;    <span class="keywordtype">long</span> <a class="code" href="classpy_1_1obj.html#a897294eef3134f10fd7b553907577211">size</a>()<span class="keyword">const</span></div>
-<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;        <span class="keywordflow">if</span>(_p){</div>
-<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;            <span class="keywordflow">if</span>(PySequence_Check(_p)){        </div>
-<div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;                <span class="keywordtype">long</span> r = PySequence_Size(_p);</div>
-<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;                <span class="keywordflow">if</span>(r != -1)</div>
-<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;                    <span class="keywordflow">return</span> r;</div>
-<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;            }</div>
-<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span>(PyMapping_Check(_p)){</div>
-<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;                <span class="keywordtype">long</span> r = PyMapping_Size(_p);</div>
-<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;                <span class="keywordflow">if</span>(r != -1)</div>
-<div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;                    <span class="keywordflow">return</span> r;</div>
-<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;            }</div>
-<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span>(PyAnySet_Check(_p)){</div>
-<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;                <span class="keywordtype">long</span> r = PySet_Size(_p);</div>
-<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;                <span class="keywordflow">if</span>(r != -1)</div>
-<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;                    <span class="keywordflow">return</span> r;</div>
-<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;            }</div>
-<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;        }</div>
-<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;        <span class="keywordflow">throw</span> <a class="code" href="classpy_1_1type__err.html">type_err</a>(<span class="stringliteral">&quot;len failed&quot;</span>);</div>
-<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;    }</div>
-<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;<span class="comment">    /** &#39;in&#39; as &#39;has&#39;.</span></div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;<span class="comment">     * @throw type_err</span></div>
-<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00640"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#a6312a190f29a962c5911366d3580c229">  640</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classpy_1_1obj.html#a6312a190f29a962c5911366d3580c229">has</a>(<span class="keyword">const</span> <a class="code" href="classpy_1_1obj.html">obj</a>&amp; x)<span class="keyword">const</span></div>
-<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;        <span class="keywordflow">if</span>(_p){</div>
-<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;            <span class="keywordflow">if</span>(PySequence_Check(_p)){        </div>
-<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;                <span class="keywordtype">int</span> r = PySequence_Contains(_p, x._p);</div>
-<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;                <span class="keywordflow">if</span>(r != -1)</div>
-<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;                    <span class="keywordflow">return</span> r;</div>
-<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;            }</div>
-<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span>(PyMapping_Check(_p)){</div>
-<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;                <span class="keywordtype">int</span> r = PyMapping_HasKey(_p, x._p);</div>
-<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;                <span class="keywordflow">if</span>(r != -1)</div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;                    <span class="keywordflow">return</span> r;</div>
-<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;            }</div>
-<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span>(PyAnySet_Check(_p)){</div>
-<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;                <span class="keywordtype">int</span> r = PySet_Contains(_p, x._p);</div>
-<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;                <span class="keywordflow">if</span>(r != -1)</div>
-<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;                    <span class="keywordflow">return</span> r;</div>
-<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;            }</div>
-<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;        }</div>
-<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;        <span class="keywordflow">throw</span> <a class="code" href="classpy_1_1type__err.html">type_err</a>(<span class="stringliteral">&quot;has failed&quot;</span>);</div>
-<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;    }</div>
-<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;        <span class="comment"></span></div>
-<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;<span class="comment">    /** get item.</span></div>
-<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;<span class="comment">     * Warning, a new obj will be got! not a reference to the original one!</span></div>
-<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;<span class="comment">     * @throw index_err</span></div>
-<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00666"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#ad797721e0553fe46a8157331218f7156">  666</a></span>&#160;    <span class="keyword">const</span> <a class="code" href="classpy_1_1obj.html">obj</a> <a class="code" href="classpy_1_1obj.html#ad797721e0553fe46a8157331218f7156">operator []</a>(<span class="keyword">const</span> <a class="code" href="classpy_1_1obj.html">obj</a>&amp; o)<span class="keyword">const</span></div>
-<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;        PyObject* p = PyObject_GetItem(_p, o._p);</div>
-<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;        <span class="keywordflow">if</span>(!p){</div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classpy_1_1index__err.html">index_err</a>(<span class="stringliteral">&quot;non-existing item&quot;</span>);</div>
-<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;        }</div>
-<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classpy_1_1obj.html#a7b970e33c82b129f2123c80a20028bb8">p</a>;</div>
-<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;    }</div>
-<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;    <span class="comment"></span></div>
-<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;<span class="comment">    /** set_item.</span></div>
-<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;<span class="comment">     * @throw index_err</span></div>
-<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00678"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#a6a81a1b0b12a2aafd9554a3401921d0a">  678</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classpy_1_1obj.html#a6a81a1b0b12a2aafd9554a3401921d0a">set_item</a>(<span class="keyword">const</span> <a class="code" href="classpy_1_1obj.html">obj</a>&amp; key, <span class="keyword">const</span> <a class="code" href="classpy_1_1obj.html">obj</a>&amp; value)</div>
-<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;    {</div>
-<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;        <span class="keywordtype">int</span> r = PyObject_SetItem(_p, key._p, value._p);</div>
-<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;        <span class="keywordflow">if</span>(r == -1)</div>
-<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classpy_1_1index__err.html">index_err</a>(<span class="stringliteral">&quot;set_item failed&quot;</span>);</div>
-<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;    }</div>
-<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;    <span class="comment"></span></div>
-<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;<span class="comment">    /** del_item.</span></div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;<span class="comment">     * @throw index_err</span></div>
-<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00688"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#a0f6ce8f07ee0156bd654df00fbe23e84">  688</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classpy_1_1obj.html#a0f6ce8f07ee0156bd654df00fbe23e84">del_item</a>(<span class="keyword">const</span> <a class="code" href="classpy_1_1obj.html">obj</a>&amp; key)</div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;    {</div>
-<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;        <span class="keywordtype">int</span> r = PyObject_DelItem(_p, key._p);</div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;        <span class="keywordflow">if</span>(r == -1)</div>
-<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classpy_1_1index__err.html">index_err</a>(<span class="stringliteral">&quot;del_item failed&quot;</span>);</div>
-<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;    }</div>
-<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;    <span class="comment"></span></div>
-<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;<span class="comment">    /** get the begin iter.</span></div>
-<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;<span class="comment">     * @throw type_err</span></div>
-<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;    <span class="keyword">inline</span> <a class="code" href="classpy_1_1iter.html">iter</a> <a class="code" href="classpy_1_1obj.html#a1eb9a3b7b6f0984503fb7f9ff451d698">begin</a>()<span class="keyword">const</span>;</div>
-<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;    <span class="comment"></span></div>
-<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;<span class="comment">    /** get the end iter.</span></div>
-<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;    <span class="keyword">inline</span> <a class="code" href="classpy_1_1iter.html">iter</a> <a class="code" href="classpy_1_1obj.html#aefdfb0fca151cca86e6e5490e10e3161">end</a>()<span class="keyword">const</span>;</div>
-<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;    </div>
-<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;    <span class="comment">// introspection</span></div>
-<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;<span class="comment">    /** py object dir.</span></div>
-<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;<span class="comment">     * @throw val_err</span></div>
+<div class="line"><a name="l00609"></a><span class="lineno">  609</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;<span class="comment">    /** call with args, and key/value pairs.</span></div>
+<div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;<span class="comment">     * @throw type_err</span></div>
+<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00613"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#adf750198e57d3f97fad5c9f71f45c0a2">  613</a></span>&#160;    <a class="code" href="classpy_1_1obj.html">obj</a> <a class="code" href="classpy_1_1obj.html#adf750198e57d3f97fad5c9f71f45c0a2">call</a>(<span class="keyword">const</span> <a class="code" href="classpy_1_1obj.html">obj</a>&amp; args, <span class="keyword">const</span> <a class="code" href="classpy_1_1obj.html">obj</a>&amp; kw)<span class="keyword">const</span></div>
+<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;        PyObject* r = PyObject_Call(_p, args._p, kw._p);</div>
+<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;        <span class="keywordflow">if</span>(r == NULL)</div>
+<div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classpy_1_1type__err.html">type_err</a>(<span class="stringliteral">&quot;call failed&quot;</span>);</div>
+<div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;        <span class="keywordflow">return</span> r;</div>
+<div class="line"><a name="l00619"></a><span class="lineno">  619</span>&#160;    }</div>
+<div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160;        </div>
+<div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;    <span class="comment">// container methods</span></div>
+<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;    <span class="comment"></span></div>
+<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;<span class="comment">    /** &#39;len&#39; as &#39;size&#39;.</span></div>
+<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;<span class="comment">     * @throw type_err</span></div>
+<div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00626"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#a897294eef3134f10fd7b553907577211">  626</a></span>&#160;    <span class="keywordtype">long</span> <a class="code" href="classpy_1_1obj.html#a897294eef3134f10fd7b553907577211">size</a>()<span class="keyword">const</span></div>
+<div class="line"><a name="l00627"></a><span class="lineno">  627</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00628"></a><span class="lineno">  628</span>&#160;        <span class="keywordflow">if</span>(_p){</div>
+<div class="line"><a name="l00629"></a><span class="lineno">  629</span>&#160;            <span class="keywordflow">if</span>(PySequence_Check(_p)){        </div>
+<div class="line"><a name="l00630"></a><span class="lineno">  630</span>&#160;                <span class="keywordtype">long</span> r = PySequence_Size(_p);</div>
+<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;                <span class="keywordflow">if</span>(r != -1)</div>
+<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;                    <span class="keywordflow">return</span> r;</div>
+<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;            }</div>
+<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span>(PyMapping_Check(_p)){</div>
+<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;                <span class="keywordtype">long</span> r = PyMapping_Size(_p);</div>
+<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;                <span class="keywordflow">if</span>(r != -1)</div>
+<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;                    <span class="keywordflow">return</span> r;</div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;            }</div>
+<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span>(PyAnySet_Check(_p)){</div>
+<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;                <span class="keywordtype">long</span> r = PySet_Size(_p);</div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;                <span class="keywordflow">if</span>(r != -1)</div>
+<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;                    <span class="keywordflow">return</span> r;</div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;            }</div>
+<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;        }</div>
+<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;        <span class="keywordflow">throw</span> <a class="code" href="classpy_1_1type__err.html">type_err</a>(<span class="stringliteral">&quot;len failed&quot;</span>);</div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;    }</div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;<span class="comment">    /** &#39;in&#39; as &#39;has&#39;.</span></div>
+<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;<span class="comment">     * @throw type_err</span></div>
+<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00651"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#a6312a190f29a962c5911366d3580c229">  651</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classpy_1_1obj.html#a6312a190f29a962c5911366d3580c229">has</a>(<span class="keyword">const</span> <a class="code" href="classpy_1_1obj.html">obj</a>&amp; x)<span class="keyword">const</span></div>
+<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;        <span class="keywordflow">if</span>(_p){</div>
+<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;            <span class="keywordflow">if</span>(PySequence_Check(_p)){        </div>
+<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;                <span class="keywordtype">int</span> r = PySequence_Contains(_p, x._p);</div>
+<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;                <span class="keywordflow">if</span>(r != -1)</div>
+<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;                    <span class="keywordflow">return</span> r;</div>
+<div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160;            }</div>
+<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span>(PyMapping_Check(_p)){</div>
+<div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160;                <span class="keywordtype">int</span> r = PyMapping_HasKey(_p, x._p);</div>
+<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;                <span class="keywordflow">if</span>(r != -1)</div>
+<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;                    <span class="keywordflow">return</span> r;</div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;            }</div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span>(PyAnySet_Check(_p)){</div>
+<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;                <span class="keywordtype">int</span> r = PySet_Contains(_p, x._p);</div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;                <span class="keywordflow">if</span>(r != -1)</div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;                    <span class="keywordflow">return</span> r;</div>
+<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;            }</div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;        }</div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;        <span class="keywordflow">throw</span> <a class="code" href="classpy_1_1type__err.html">type_err</a>(<span class="stringliteral">&quot;has failed&quot;</span>);</div>
+<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;    }</div>
+<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;        <span class="comment"></span></div>
+<div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;<span class="comment">    /** get item.</span></div>
+<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;<span class="comment">     * Warning, a new obj will be got! not a reference to the original one!</span></div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;<span class="comment">     * @throw index_err</span></div>
+<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00677"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#ad797721e0553fe46a8157331218f7156">  677</a></span>&#160;    <span class="keyword">const</span> <a class="code" href="classpy_1_1obj.html">obj</a> <a class="code" href="classpy_1_1obj.html#ad797721e0553fe46a8157331218f7156">operator []</a>(<span class="keyword">const</span> <a class="code" href="classpy_1_1obj.html">obj</a>&amp; o)<span class="keyword">const</span></div>
+<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;        PyObject* p = PyObject_GetItem(_p, o._p);</div>
+<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;        <span class="keywordflow">if</span>(!p){</div>
+<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classpy_1_1index__err.html">index_err</a>(<span class="stringliteral">&quot;non-existing item&quot;</span>);</div>
+<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;        }</div>
+<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classpy_1_1obj.html#a7b970e33c82b129f2123c80a20028bb8">p</a>;</div>
+<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;    }</div>
+<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;    <span class="comment"></span></div>
+<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;<span class="comment">    /** set_item.</span></div>
+<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;<span class="comment">     * @throw index_err</span></div>
+<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00689"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#a6a81a1b0b12a2aafd9554a3401921d0a">  689</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classpy_1_1obj.html#a6a81a1b0b12a2aafd9554a3401921d0a">set_item</a>(<span class="keyword">const</span> <a class="code" href="classpy_1_1obj.html">obj</a>&amp; key, <span class="keyword">const</span> <a class="code" href="classpy_1_1obj.html">obj</a>&amp; value)</div>
+<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;    {</div>
+<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;        <span class="keywordtype">int</span> r = PyObject_SetItem(_p, key._p, value._p);</div>
+<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;        <span class="keywordflow">if</span>(r == -1)</div>
+<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classpy_1_1index__err.html">index_err</a>(<span class="stringliteral">&quot;set_item failed&quot;</span>);</div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;    }</div>
+<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;    <span class="comment"></span></div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;<span class="comment">    /** del_item.</span></div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;<span class="comment">     * @throw index_err</span></div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00699"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#a0f6ce8f07ee0156bd654df00fbe23e84">  699</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classpy_1_1obj.html#a0f6ce8f07ee0156bd654df00fbe23e84">del_item</a>(<span class="keyword">const</span> <a class="code" href="classpy_1_1obj.html">obj</a>&amp; key)</div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;    {</div>
+<div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160;        <span class="keywordtype">int</span> r = PyObject_DelItem(_p, key._p);</div>
+<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;        <span class="keywordflow">if</span>(r == -1)</div>
+<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classpy_1_1index__err.html">index_err</a>(<span class="stringliteral">&quot;del_item failed&quot;</span>);</div>
+<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;    }</div>
+<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;    <span class="comment"></span></div>
+<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;<span class="comment">    /** get the begin iter.</span></div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;<span class="comment">     * @throw type_err</span></div>
 <div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00709"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#a4ccc40276f4035ab534f4444ae0ddba8">  709</a></span>&#160;    <a class="code" href="classpy_1_1obj.html">obj</a> <a class="code" href="classpy_1_1obj.html#a4ccc40276f4035ab534f4444ae0ddba8">dir</a>()<span class="keyword">const</span></div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;        PyObject* p = PyObject_Dir(_p);</div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;        <span class="keywordflow">if</span>(!p)</div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classpy_1_1val__err.html">val_err</a>(<span class="stringliteral">&quot;dir failed&quot;</span>);</div>
-<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classpy_1_1obj.html#a7b970e33c82b129f2123c80a20028bb8">p</a>;</div>
-<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;    }</div>
-<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;   <span class="comment"></span></div>
-<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;<span class="comment">    /** refcnt.</span></div>
-<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00719"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#a164814d1e0b50359e28b23f1dbcbedbf">  719</a></span>&#160;    Py_ssize_t <a class="code" href="classpy_1_1obj.html#a164814d1e0b50359e28b23f1dbcbedbf">refcnt</a>()<span class="keyword">const</span></div>
-<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;        <span class="keywordflow">if</span>(_p)</div>
-<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;            <span class="keywordflow">return</span> _p-&gt;ob_refcnt;</div>
-<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;        <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;            <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;    }</div>
-<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;    <span class="comment"></span></div>
-<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;<span class="comment">    /** get inner PyObject.</span></div>
-<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00729"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#a7b970e33c82b129f2123c80a20028bb8">  729</a></span>&#160;    PPyObject <a class="code" href="classpy_1_1obj.html#a7b970e33c82b129f2123c80a20028bb8">p</a>()<span class="keyword">const</span></div>
-<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;        <span class="keywordflow">return</span> _p;</div>
-<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;    }</div>
-<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;        </div>
-<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;};</div>
-<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;</div>
-<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;<span class="comment">/** ostream output</span></div>
-<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;<span class="keyword">inline</span> std::ostream&amp; operator &lt;&lt;(std::ostream&amp; s, <span class="keyword">const</span> obj&amp; o)</div>
-<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;{</div>
-<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;    o.output(s);</div>
-<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;    <span class="keywordflow">return</span> s;</div>
-<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;}</div>
-<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;</div>
-<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;}; <span class="comment">//ns py</span></div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;    <span class="keyword">inline</span> <a class="code" href="classpy_1_1iter.html">iter</a> <a class="code" href="classpy_1_1obj.html#a1eb9a3b7b6f0984503fb7f9ff451d698">begin</a>()<span class="keyword">const</span>;</div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;    <span class="comment"></span></div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;<span class="comment">    /** get the end iter.</span></div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;    <span class="keyword">inline</span> <a class="code" href="classpy_1_1iter.html">iter</a> <a class="code" href="classpy_1_1obj.html#aefdfb0fca151cca86e6e5490e10e3161">end</a>()<span class="keyword">const</span>;</div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;    </div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;    <span class="comment">// introspection</span></div>
+<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;<span class="comment">    /** py object dir.</span></div>
+<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;<span class="comment">     * @throw val_err</span></div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00720"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#a4ccc40276f4035ab534f4444ae0ddba8">  720</a></span>&#160;    <a class="code" href="classpy_1_1obj.html">obj</a> <a class="code" href="classpy_1_1obj.html#a4ccc40276f4035ab534f4444ae0ddba8">dir</a>()<span class="keyword">const</span></div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;        PyObject* p = PyObject_Dir(_p);</div>
+<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;        <span class="keywordflow">if</span>(!p)</div>
+<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;            <span class="keywordflow">throw</span> <a class="code" href="classpy_1_1val__err.html">val_err</a>(<span class="stringliteral">&quot;dir failed&quot;</span>);</div>
+<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classpy_1_1obj.html#a7b970e33c82b129f2123c80a20028bb8">p</a>;</div>
+<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;    }</div>
+<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;   <span class="comment"></span></div>
+<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;<span class="comment">    /** refcnt.</span></div>
+<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00730"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#a164814d1e0b50359e28b23f1dbcbedbf">  730</a></span>&#160;    Py_ssize_t <a class="code" href="classpy_1_1obj.html#a164814d1e0b50359e28b23f1dbcbedbf">refcnt</a>()<span class="keyword">const</span></div>
+<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;        <span class="keywordflow">if</span>(_p)</div>
+<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;            <span class="keywordflow">return</span> _p-&gt;ob_refcnt;</div>
+<div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160;        <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;            <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;    }</div>
+<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;    <span class="comment"></span></div>
+<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;<span class="comment">    /** get inner PyObject.</span></div>
+<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00740"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#a7b970e33c82b129f2123c80a20028bb8">  740</a></span>&#160;    PPyObject <a class="code" href="classpy_1_1obj.html#a7b970e33c82b129f2123c80a20028bb8">p</a>()<span class="keyword">const</span></div>
+<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;        <span class="keywordflow">return</span> _p;</div>
+<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;    }</div>
+<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;        </div>
+<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;};</div>
 <div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;</div>
-<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;<span class="comment">/* sub types</span></div>
-<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;<span class="comment">***********/</span></div>
-<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;</div>
-<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;<span class="preprocessor">#include &quot;_iter.hpp&quot;</span></div>
-<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;</div>
-<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;<span class="preprocessor">#include &quot;_seq.hpp&quot;</span></div>
-<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;<span class="preprocessor">#include &quot;_tuple.hpp&quot;</span></div>
-<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;<span class="preprocessor">#include &quot;_list.hpp&quot;</span></div>
-<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;<span class="preprocessor">#include &quot;_str.hpp&quot;</span></div>
-<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;</div>
-<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;<span class="preprocessor">#include &quot;_file.hpp&quot;</span></div>
-<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;</div>
-<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;<span class="preprocessor">#include &quot;_num.hpp&quot;</span></div>
-<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;<span class="preprocessor">#include &quot;_set.hpp&quot;</span></div>
-<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;</div>
-<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;<span class="preprocessor">#include &quot;_dict.hpp&quot;</span></div>
-<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;</div>
-<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;<span class="comment">/* implementation</span></div>
-<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;<span class="comment">****************/</span></div>
-<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;</div>
-<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;<span class="preprocessor">#include &quot;_sys.hpp&quot;</span></div>
-<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;</div>
-<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;<span class="keyword">namespace </span>py {</div>
-<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;</div>
-<div class="line"><a name="l00771"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#aefdfb0fca151cca86e6e5490e10e3161">  771</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="classpy_1_1iter.html">iter</a> <a class="code" href="classpy_1_1obj.html#aefdfb0fca151cca86e6e5490e10e3161">obj::end</a>()<span class="keyword">const</span></div>
-<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classpy_1_1iter.html">iter</a>();</div>
-<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;}</div>
-<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;</div>
-<div class="line"><a name="l00776"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#a1eb9a3b7b6f0984503fb7f9ff451d698">  776</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="classpy_1_1iter.html">iter</a> <a class="code" href="classpy_1_1obj.html#a1eb9a3b7b6f0984503fb7f9ff451d698">obj::begin</a>()<span class="keyword">const</span></div>
-<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classpy_1_1iter.html">iter</a>(*<span class="keyword">this</span>);</div>
-<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;}</div>
-<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;</div>
-<div class="line"><a name="l00781"></a><span class="lineno"><a class="line" href="classpy_1_1seq.html#a85c8755806763dd6ff840f2becdebe93">  781</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="classpy_1_1list.html">list</a> <a class="code" href="classpy_1_1seq.html#a85c8755806763dd6ff840f2becdebe93">seq::to_list</a>()<span class="keyword">const</span></div>
-<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;    PyObject* r = PySequence_List(_p);</div>
-<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;    <span class="keywordflow">if</span>(r)</div>
-<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;        <span class="keywordflow">return</span> r;</div>
-<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;    <span class="keywordflow">throw</span> <a class="code" href="classpy_1_1type__err.html">type_err</a>(<span class="stringliteral">&quot;to_list failed&quot;</span>);</div>
-<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;}</div>
-<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;</div>
-<div class="line"><a name="l00789"></a><span class="lineno"><a class="line" href="classpy_1_1seq.html#a7562f22325c84896382613e2b64b656d">  789</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="classpy_1_1tuple.html">tuple</a> <a class="code" href="classpy_1_1seq.html#a7562f22325c84896382613e2b64b656d">seq::to_tuple</a>()<span class="keyword">const</span></div>
-<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;<span class="keyword"></span>{</div>
-<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;    PyObject* r = PySequence_Tuple(_p);</div>
-<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;    <span class="keywordflow">if</span>(r)</div>
-<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;        <span class="keywordflow">return</span> r;</div>
-<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;    <span class="keywordflow">throw</span> <a class="code" href="classpy_1_1type__err.html">type_err</a>(<span class="stringliteral">&quot;to_tuple failed&quot;</span>);</div>
-<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;}</div>
-<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;</div>
-<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;}; <span class="comment">// ns py</span></div>
-<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;</div>
-<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;<span class="preprocessor">#endif // PY11_PY_HPP</span></div>
-<div class="ttc" id="classpy_1_1obj_html_adf750198e57d3f97fad5c9f71f45c0a2"><div class="ttname"><a href="classpy_1_1obj.html#adf750198e57d3f97fad5c9f71f45c0a2">py::obj::call</a></div><div class="ttdeci">obj call(const obj &amp;args, const obj &amp;kw) const </div><div class="ttdoc">call with key/value pairs. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00602">py.hpp:602</a></div></div>
+<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;<span class="comment">/** ostream output</span></div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;<span class="keyword">inline</span> std::ostream&amp; operator &lt;&lt;(std::ostream&amp; s, <span class="keyword">const</span> obj&amp; o)</div>
+<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;{</div>
+<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;    o.output(s);</div>
+<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;    <span class="keywordflow">return</span> s;</div>
+<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;}</div>
+<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;</div>
+<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;}; <span class="comment">//ns py</span></div>
+<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;</div>
+<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;<span class="comment">/* sub types</span></div>
+<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;<span class="comment">***********/</span></div>
+<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;</div>
+<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;<span class="preprocessor">#include &quot;_iter.hpp&quot;</span></div>
+<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;</div>
+<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;<span class="preprocessor">#include &quot;_seq.hpp&quot;</span></div>
+<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;<span class="preprocessor">#include &quot;_tuple.hpp&quot;</span></div>
+<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;<span class="preprocessor">#include &quot;_list.hpp&quot;</span></div>
+<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;<span class="preprocessor">#include &quot;_str.hpp&quot;</span></div>
+<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;</div>
+<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;<span class="preprocessor">#include &quot;_file.hpp&quot;</span></div>
+<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;</div>
+<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;<span class="preprocessor">#include &quot;_num.hpp&quot;</span></div>
+<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;<span class="preprocessor">#include &quot;_set.hpp&quot;</span></div>
+<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;</div>
+<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;<span class="preprocessor">#include &quot;_dict.hpp&quot;</span></div>
+<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;</div>
+<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;<span class="comment">/* implementation</span></div>
+<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;<span class="comment">****************/</span></div>
+<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;</div>
+<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;<span class="preprocessor">#include &quot;_sys.hpp&quot;</span></div>
+<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;</div>
+<div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160;<span class="keyword">namespace </span>py {</div>
+<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;</div>
+<div class="line"><a name="l00782"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#aefdfb0fca151cca86e6e5490e10e3161">  782</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="classpy_1_1iter.html">iter</a> <a class="code" href="classpy_1_1obj.html#aefdfb0fca151cca86e6e5490e10e3161">obj::end</a>()<span class="keyword">const</span></div>
+<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classpy_1_1iter.html">iter</a>();</div>
+<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;}</div>
+<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;</div>
+<div class="line"><a name="l00787"></a><span class="lineno"><a class="line" href="classpy_1_1obj.html#a1eb9a3b7b6f0984503fb7f9ff451d698">  787</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="classpy_1_1iter.html">iter</a> <a class="code" href="classpy_1_1obj.html#a1eb9a3b7b6f0984503fb7f9ff451d698">obj::begin</a>()<span class="keyword">const</span></div>
+<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classpy_1_1iter.html">iter</a>(*<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;}</div>
+<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;</div>
+<div class="line"><a name="l00792"></a><span class="lineno"><a class="line" href="classpy_1_1seq.html#a85c8755806763dd6ff840f2becdebe93">  792</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="classpy_1_1list.html">list</a> <a class="code" href="classpy_1_1seq.html#a85c8755806763dd6ff840f2becdebe93">seq::to_list</a>()<span class="keyword">const</span></div>
+<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;    PyObject* r = PySequence_List(_p);</div>
+<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;    <span class="keywordflow">if</span>(r)</div>
+<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;        <span class="keywordflow">return</span> r;</div>
+<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;    <span class="keywordflow">throw</span> <a class="code" href="classpy_1_1type__err.html">type_err</a>(<span class="stringliteral">&quot;to_list failed&quot;</span>);</div>
+<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;}</div>
+<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;</div>
+<div class="line"><a name="l00800"></a><span class="lineno"><a class="line" href="classpy_1_1seq.html#a7562f22325c84896382613e2b64b656d">  800</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="classpy_1_1tuple.html">tuple</a> <a class="code" href="classpy_1_1seq.html#a7562f22325c84896382613e2b64b656d">seq::to_tuple</a>()<span class="keyword">const</span></div>
+<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;<span class="keyword"></span>{</div>
+<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;    PyObject* r = PySequence_Tuple(_p);</div>
+<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;    <span class="keywordflow">if</span>(r)</div>
+<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;        <span class="keywordflow">return</span> r;</div>
+<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;    <span class="keywordflow">throw</span> <a class="code" href="classpy_1_1type__err.html">type_err</a>(<span class="stringliteral">&quot;to_tuple failed&quot;</span>);</div>
+<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;}</div>
+<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;</div>
+<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;}; <span class="comment">// ns py</span></div>
+<div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160;</div>
+<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;<span class="preprocessor">#endif // PY11_PY_HPP</span></div>
+<div class="ttc" id="classpy_1_1obj_html_adf750198e57d3f97fad5c9f71f45c0a2"><div class="ttname"><a href="classpy_1_1obj.html#adf750198e57d3f97fad5c9f71f45c0a2">py::obj::call</a></div><div class="ttdeci">obj call(const obj &amp;args, const obj &amp;kw) const </div><div class="ttdoc">call with args, and key/value pairs. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00613">py.hpp:613</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_a45f965a2d3efcb60fec8d5a857f62422"><div class="ttname"><a href="classpy_1_1obj.html#a45f965a2d3efcb60fec8d5a857f62422">py::obj::obj</a></div><div class="ttdeci">obj(int i)</div><div class="ttdoc">int. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00233">py.hpp:233</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_a3c013ff1afa4a5d4c43c28eda4a362ec"><div class="ttname"><a href="classpy_1_1obj.html#a3c013ff1afa4a5d4c43c28eda4a362ec">py::obj::set_attr</a></div><div class="ttdeci">void set_attr(const char *a, const obj &amp;v)</div><div class="ttdoc">set attr. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00404">py.hpp:404</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_abbfe38180da654cd78157003671a53a8"><div class="ttname"><a href="classpy_1_1obj.html#abbfe38180da654cd78157003671a53a8">py::obj::obj</a></div><div class="ttdeci">obj(const obj &amp;o) noexcept</div><div class="ttdoc">copy ctor. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00109">py.hpp:109</a></div></div>
-<div class="ttc" id="classpy_1_1obj_html_aeb9b086a1f1298e2b2dea354264b9d99"><div class="ttname"><a href="classpy_1_1obj.html#aeb9b086a1f1298e2b2dea354264b9d99">py::obj::operator!</a></div><div class="ttdeci">bool operator!() const </div><div class="ttdoc">is false </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00226">py.hpp:226</a></div></div>
-<div class="ttc" id="classpy_1_1obj_html_a164814d1e0b50359e28b23f1dbcbedbf"><div class="ttname"><a href="classpy_1_1obj.html#a164814d1e0b50359e28b23f1dbcbedbf">py::obj::refcnt</a></div><div class="ttdeci">Py_ssize_t refcnt() const </div><div class="ttdoc">refcnt. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00719">py.hpp:719</a></div></div>
+<div class="ttc" id="classpy_1_1obj_html_aeb9b086a1f1298e2b2dea354264b9d99"><div class="ttname"><a href="classpy_1_1obj.html#aeb9b086a1f1298e2b2dea354264b9d99">py::obj::operator!</a></div><div class="ttdeci">bool operator!() const </div><div class="ttdoc">test null. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00217">py.hpp:217</a></div></div>
+<div class="ttc" id="classpy_1_1obj_html_a164814d1e0b50359e28b23f1dbcbedbf"><div class="ttname"><a href="classpy_1_1obj.html#a164814d1e0b50359e28b23f1dbcbedbf">py::obj::refcnt</a></div><div class="ttdeci">Py_ssize_t refcnt() const </div><div class="ttdoc">refcnt. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00730">py.hpp:730</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_aac6d61479d758f561572f4e94ad79141"><div class="ttname"><a href="classpy_1_1obj.html#aac6d61479d758f561572f4e94ad79141">py::obj::obj</a></div><div class="ttdeci">obj(obj &amp;&amp;o) noexcept</div><div class="ttdoc">move ctor. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00149">py.hpp:149</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_ae2bf46e50a2efe4ca139754232e726dc"><div class="ttname"><a href="classpy_1_1obj.html#ae2bf46e50a2efe4ca139754232e726dc">py::obj::obj</a></div><div class="ttdeci">obj(PyObject *p, bool borrowed=false) noexcept</div><div class="ttdoc">create from Py functions. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00132">py.hpp:132</a></div></div>
-<div class="ttc" id="classpy_1_1obj_html_a0f6ce8f07ee0156bd654df00fbe23e84"><div class="ttname"><a href="classpy_1_1obj.html#a0f6ce8f07ee0156bd654df00fbe23e84">py::obj::del_item</a></div><div class="ttdeci">void del_item(const obj &amp;key)</div><div class="ttdoc">del_item. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00688">py.hpp:688</a></div></div>
+<div class="ttc" id="classpy_1_1obj_html_a0f6ce8f07ee0156bd654df00fbe23e84"><div class="ttname"><a href="classpy_1_1obj.html#a0f6ce8f07ee0156bd654df00fbe23e84">py::obj::del_item</a></div><div class="ttdeci">void del_item(const obj &amp;key)</div><div class="ttdoc">del_item. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00699">py.hpp:699</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_aac3dce08adb9f8aad77ad0ae42d8f168"><div class="ttname"><a href="classpy_1_1obj.html#aac3dce08adb9f8aad77ad0ae42d8f168">py::obj::is_a</a></div><div class="ttdeci">bool is_a(const obj &amp;t) const </div><div class="ttdoc">type check </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00327">py.hpp:327</a></div></div>
-<div class="ttc" id="classpy_1_1obj_html_a6a81a1b0b12a2aafd9554a3401921d0a"><div class="ttname"><a href="classpy_1_1obj.html#a6a81a1b0b12a2aafd9554a3401921d0a">py::obj::set_item</a></div><div class="ttdeci">void set_item(const obj &amp;key, const obj &amp;value)</div><div class="ttdoc">set_item. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00678">py.hpp:678</a></div></div>
+<div class="ttc" id="classpy_1_1obj_html_a6a81a1b0b12a2aafd9554a3401921d0a"><div class="ttname"><a href="classpy_1_1obj.html#a6a81a1b0b12a2aafd9554a3401921d0a">py::obj::set_item</a></div><div class="ttdeci">void set_item(const obj &amp;key, const obj &amp;value)</div><div class="ttdoc">set_item. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00689">py.hpp:689</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html"><div class="ttname"><a href="classpy_1_1obj.html">py::obj</a></div><div class="ttdoc">wrapper of PyObject. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00069">py.hpp:69</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_a0eb20699263ef9445edf987774b1bd1c"><div class="ttname"><a href="classpy_1_1obj.html#a0eb20699263ef9445edf987774b1bd1c">py::obj::del_attr</a></div><div class="ttdeci">void del_attr(const char *a)</div><div class="ttdoc">del attr. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00424">py.hpp:424</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_a858bdc011e0bc58a9a085cd0c6868ee1"><div class="ttname"><a href="classpy_1_1obj.html#a858bdc011e0bc58a9a085cd0c6868ee1">py::obj::as_double</a></div><div class="ttdeci">double as_double() const </div><div class="ttdoc">as_double from obj. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00275">py.hpp:275</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_a37c3ad5d5bd6c2e94cb38ff3d9e21c8a"><div class="ttname"><a href="classpy_1_1obj.html#a37c3ad5d5bd6c2e94cb38ff3d9e21c8a">py::obj::repr</a></div><div class="ttdeci">obj repr() const </div><div class="ttdoc">repr. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00531">py.hpp:531</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_ab87cffaa3b503b5cd2b9eceff8da6323"><div class="ttname"><a href="classpy_1_1obj.html#ab87cffaa3b503b5cd2b9eceff8da6323">py::obj::is_int</a></div><div class="ttdeci">bool is_int() const </div><div class="ttdoc">is_int. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00243">py.hpp:243</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_a210a47f7eb170083a84d9df5428a6dc9"><div class="ttname"><a href="classpy_1_1obj.html#a210a47f7eb170083a84d9df5428a6dc9">py::obj::~obj</a></div><div class="ttdeci">~obj() noexcept</div><div class="ttdoc">dtor. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00188">py.hpp:188</a></div></div>
-<div class="ttc" id="classpy_1_1obj_html_a1eb9a3b7b6f0984503fb7f9ff451d698"><div class="ttname"><a href="classpy_1_1obj.html#a1eb9a3b7b6f0984503fb7f9ff451d698">py::obj::begin</a></div><div class="ttdeci">iter begin() const </div><div class="ttdoc">get the begin iter. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00776">py.hpp:776</a></div></div>
+<div class="ttc" id="classpy_1_1obj_html_a1eb9a3b7b6f0984503fb7f9ff451d698"><div class="ttname"><a href="classpy_1_1obj.html#a1eb9a3b7b6f0984503fb7f9ff451d698">py::obj::begin</a></div><div class="ttdeci">iter begin() const </div><div class="ttdoc">get the begin iter. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00787">py.hpp:787</a></div></div>
 <div class="ttc" id="classpy_1_1index__err_html"><div class="ttname"><a href="classpy_1_1index__err.html">py::index_err</a></div><div class="ttdoc">exception: index_err. </div><div class="ttdef"><b>Definition:</b> <a href="__err_8hpp_source.html#l00027">_err.hpp:27</a></div></div>
-<div class="ttc" id="classpy_1_1seq_html_a85c8755806763dd6ff840f2becdebe93"><div class="ttname"><a href="classpy_1_1seq.html#a85c8755806763dd6ff840f2becdebe93">py::seq::to_list</a></div><div class="ttdeci">list to_list() const </div><div class="ttdoc">get a list clone. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00781">py.hpp:781</a></div></div>
+<div class="ttc" id="classpy_1_1seq_html_a85c8755806763dd6ff840f2becdebe93"><div class="ttname"><a href="classpy_1_1seq.html#a85c8755806763dd6ff840f2becdebe93">py::seq::to_list</a></div><div class="ttdeci">list to_list() const </div><div class="ttdoc">get a list clone. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00792">py.hpp:792</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_a3ae8e913dd62a1d00fd6eb0a8493ff89"><div class="ttname"><a href="classpy_1_1obj.html#a3ae8e913dd62a1d00fd6eb0a8493ff89">py::obj::transfer</a></div><div class="ttdeci">PyObject * transfer() noexcept</div><div class="ttdoc">transfer the ownership of inner object. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00206">py.hpp:206</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_ab8633ebd1d3f35463a6799ba3d07aa47"><div class="ttname"><a href="classpy_1_1obj.html#ab8633ebd1d3f35463a6799ba3d07aa47">py::obj::operator&lt;</a></div><div class="ttdeci">bool operator&lt;(const obj &amp;o) const </div><div class="ttdoc">&amp;lt; </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00436">py.hpp:436</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_a2f6aabb60fbd1befe3fe98249368a504"><div class="ttname"><a href="classpy_1_1obj.html#a2f6aabb60fbd1befe3fe98249368a504">py::obj::to_unicode</a></div><div class="ttdeci">obj to_unicode() const </div><div class="ttdoc">unicode. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00554">py.hpp:554</a></div></div>
 <div class="ttc" id="classpy_1_1set_html"><div class="ttname"><a href="classpy_1_1set.html">py::set</a></div><div class="ttdoc">set object </div><div class="ttdef"><b>Definition:</b> <a href="__set_8hpp_source.html#l00005">_set.hpp:5</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_aca4741b19eb7a5eb350bf2a0979db9db"><div class="ttname"><a href="classpy_1_1obj.html#aca4741b19eb7a5eb350bf2a0979db9db">py::obj::type</a></div><div class="ttdeci">obj type() const </div><div class="ttdoc">py object type. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00312">py.hpp:312</a></div></div>
-<div class="ttc" id="classpy_1_1obj_html_a7b970e33c82b129f2123c80a20028bb8"><div class="ttname"><a href="classpy_1_1obj.html#a7b970e33c82b129f2123c80a20028bb8">py::obj::p</a></div><div class="ttdeci">PPyObject p() const </div><div class="ttdoc">get inner PyObject. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00729">py.hpp:729</a></div></div>
-<div class="ttc" id="classpy_1_1obj_html_ade996cd5fa067ea3897ffb6fcae304a2"><div class="ttname"><a href="classpy_1_1obj.html#ade996cd5fa067ea3897ffb6fcae304a2">py::obj::is_null</a></div><div class="ttdeci">bool is_null() const </div><div class="ttdoc">test null. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00217">py.hpp:217</a></div></div>
+<div class="ttc" id="classpy_1_1obj_html_a7b970e33c82b129f2123c80a20028bb8"><div class="ttname"><a href="classpy_1_1obj.html#a7b970e33c82b129f2123c80a20028bb8">py::obj::p</a></div><div class="ttdeci">PPyObject p() const </div><div class="ttdoc">get inner PyObject. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00740">py.hpp:740</a></div></div>
 <div class="ttc" id="classpy_1_1val__err_html"><div class="ttname"><a href="classpy_1_1val__err.html">py::val_err</a></div><div class="ttdoc">exception: val_err. </div><div class="ttdef"><b>Definition:</b> <a href="__err_8hpp_source.html#l00043">_err.hpp:43</a></div></div>
-<div class="ttc" id="classpy_1_1obj_html_aefdfb0fca151cca86e6e5490e10e3161"><div class="ttname"><a href="classpy_1_1obj.html#aefdfb0fca151cca86e6e5490e10e3161">py::obj::end</a></div><div class="ttdeci">iter end() const </div><div class="ttdoc">get the end iter. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00771">py.hpp:771</a></div></div>
+<div class="ttc" id="classpy_1_1obj_html_aefdfb0fca151cca86e6e5490e10e3161"><div class="ttname"><a href="classpy_1_1obj.html#aefdfb0fca151cca86e6e5490e10e3161">py::obj::end</a></div><div class="ttdeci">iter end() const </div><div class="ttdoc">get the end iter. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00782">py.hpp:782</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_a5039e13ddfff67d978ce692ff35eac47"><div class="ttname"><a href="classpy_1_1obj.html#a5039e13ddfff67d978ce692ff35eac47">py::obj::attr</a></div><div class="ttdeci">obj attr(const char *s) const </div><div class="ttdoc">get attr. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00370">py.hpp:370</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_ab5ea97157fa12763e2310b438e4ed7f8"><div class="ttname"><a href="classpy_1_1obj.html#ab5ea97157fa12763e2310b438e4ed7f8">py::obj::c_str</a></div><div class="ttdeci">const char * c_str() const </div><div class="ttdoc">c_str(). </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00292">py.hpp:292</a></div></div>
+<div class="ttc" id="classpy_1_1obj_html_ae6301181d8ce7e2f723aeebe291364af"><div class="ttname"><a href="classpy_1_1obj.html#ae6301181d8ce7e2f723aeebe291364af">py::obj::call</a></div><div class="ttdeci">obj call(const obj &amp;args) const </div><div class="ttdoc">call with args. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00602">py.hpp:602</a></div></div>
 <div class="ttc" id="classpy_1_1tuple_html"><div class="ttname"><a href="classpy_1_1tuple.html">py::tuple</a></div><div class="ttdoc">py tuple. </div><div class="ttdef"><b>Definition:</b> <a href="__tuple_8hpp_source.html#l00005">_tuple.hpp:5</a></div></div>
 <div class="ttc" id="classpy_1_1iter_html"><div class="ttname"><a href="classpy_1_1iter.html">py::iter</a></div><div class="ttdoc">iter for the c++11 range loop. </div><div class="ttdef"><b>Definition:</b> <a href="__iter_8hpp_source.html#l00005">_iter.hpp:5</a></div></div>
-<div class="ttc" id="classpy_1_1obj_html_ad797721e0553fe46a8157331218f7156"><div class="ttname"><a href="classpy_1_1obj.html#ad797721e0553fe46a8157331218f7156">py::obj::operator[]</a></div><div class="ttdeci">const obj operator[](const obj &amp;o) const </div><div class="ttdoc">get item. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00666">py.hpp:666</a></div></div>
+<div class="ttc" id="classpy_1_1obj_html_ad797721e0553fe46a8157331218f7156"><div class="ttname"><a href="classpy_1_1obj.html#ad797721e0553fe46a8157331218f7156">py::obj::operator[]</a></div><div class="ttdeci">const obj operator[](const obj &amp;o) const </div><div class="ttdoc">get item. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00677">py.hpp:677</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_a38aa83598a15dece3f303ee0e76b1df0"><div class="ttname"><a href="classpy_1_1obj.html#a38aa83598a15dece3f303ee0e76b1df0">py::obj::a</a></div><div class="ttdeci">obj a(const char *s) const </div><div class="ttdoc">get attr, short form. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00382">py.hpp:382</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_abf0609ce7a9fc55579b94fa90fe0e03b"><div class="ttname"><a href="classpy_1_1obj.html#abf0609ce7a9fc55579b94fa90fe0e03b">py::obj::release</a></div><div class="ttdeci">void release() noexcept</div><div class="ttdoc">release the contained object </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00195">py.hpp:195</a></div></div>
-<div class="ttc" id="classpy_1_1obj_html_a4ccc40276f4035ab534f4444ae0ddba8"><div class="ttname"><a href="classpy_1_1obj.html#a4ccc40276f4035ab534f4444ae0ddba8">py::obj::dir</a></div><div class="ttdeci">obj dir() const </div><div class="ttdoc">py object dir. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00709">py.hpp:709</a></div></div>
-<div class="ttc" id="classpy_1_1obj_html_a897294eef3134f10fd7b553907577211"><div class="ttname"><a href="classpy_1_1obj.html#a897294eef3134f10fd7b553907577211">py::obj::size</a></div><div class="ttdeci">long size() const </div><div class="ttdoc">&amp;#39;len&amp;#39; as &amp;#39;size&amp;#39;. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00615">py.hpp:615</a></div></div>
+<div class="ttc" id="classpy_1_1obj_html_a4ccc40276f4035ab534f4444ae0ddba8"><div class="ttname"><a href="classpy_1_1obj.html#a4ccc40276f4035ab534f4444ae0ddba8">py::obj::dir</a></div><div class="ttdeci">obj dir() const </div><div class="ttdoc">py object dir. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00720">py.hpp:720</a></div></div>
+<div class="ttc" id="classpy_1_1obj_html_a897294eef3134f10fd7b553907577211"><div class="ttname"><a href="classpy_1_1obj.html#a897294eef3134f10fd7b553907577211">py::obj::size</a></div><div class="ttdeci">long size() const </div><div class="ttdoc">&amp;#39;len&amp;#39; as &amp;#39;size&amp;#39;. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00626">py.hpp:626</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_a89939268389dbc12759fc285f6bc7f2f"><div class="ttname"><a href="classpy_1_1obj.html#a89939268389dbc12759fc285f6bc7f2f">py::obj::has_attr</a></div><div class="ttdeci">bool has_attr(const obj &amp;o) const </div><div class="ttdoc">has attr. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00343">py.hpp:343</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_a29b19ec8636fe079567da1658e864641"><div class="ttname"><a href="classpy_1_1obj.html#a29b19ec8636fe079567da1658e864641">py::obj::del_attr</a></div><div class="ttdeci">void del_attr(const obj &amp;a)</div><div class="ttdoc">del attr. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00414">py.hpp:414</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_ac45e2ddc7bd01d31fe23780f1133ea6a"><div class="ttname"><a href="classpy_1_1obj.html#ac45e2ddc7bd01d31fe23780f1133ea6a">py::obj::has_attr</a></div><div class="ttdeci">bool has_attr(const char *s) const </div><div class="ttdoc">has attr. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00350">py.hpp:350</a></div></div>
-<div class="ttc" id="classpy_1_1seq_html_a7562f22325c84896382613e2b64b656d"><div class="ttname"><a href="classpy_1_1seq.html#a7562f22325c84896382613e2b64b656d">py::seq::to_tuple</a></div><div class="ttdeci">tuple to_tuple() const </div><div class="ttdoc">get a tuple clone. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00789">py.hpp:789</a></div></div>
+<div class="ttc" id="classpy_1_1seq_html_a7562f22325c84896382613e2b64b656d"><div class="ttname"><a href="classpy_1_1seq.html#a7562f22325c84896382613e2b64b656d">py::seq::to_tuple</a></div><div class="ttdeci">tuple to_tuple() const </div><div class="ttdoc">get a tuple clone. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00800">py.hpp:800</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_a5f3fc374f37686720da80462fbfc3499"><div class="ttname"><a href="classpy_1_1obj.html#a5f3fc374f37686720da80462fbfc3499">py::obj::obj</a></div><div class="ttdeci">obj(const char *s)</div><div class="ttdoc">str. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00286">py.hpp:286</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_aac19f7353926a53204807c1520c676b6"><div class="ttname"><a href="classpy_1_1obj.html#aac19f7353926a53204807c1520c676b6">py::obj::operator()</a></div><div class="ttdeci">obj operator()(argT &amp;&amp;...a) const </div><div class="ttdoc">call using operator. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00591">py.hpp:591</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_a4e5d3ff3f1047daa9038b9349077bf25"><div class="ttname"><a href="classpy_1_1obj.html#a4e5d3ff3f1047daa9038b9349077bf25">py::obj::attr</a></div><div class="ttdeci">obj attr(const obj &amp;o) const </div><div class="ttdoc">get attr. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00358">py.hpp:358</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_a25da9d0bfd58c2c69c9a5d205a56535e"><div class="ttname"><a href="classpy_1_1obj.html#a25da9d0bfd58c2c69c9a5d205a56535e">py::obj::as_long</a></div><div class="ttdeci">long as_long() const </div><div class="ttdoc">get long from obj </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00251">py.hpp:251</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_a68285f70bef2351cc987c5d7ea8de258"><div class="ttname"><a href="classpy_1_1obj.html#a68285f70bef2351cc987c5d7ea8de258">py::obj::obj</a></div><div class="ttdeci">obj(std::initializer_list&lt; obj &gt; l)</div><div class="ttdoc">tuple. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00166">py.hpp:166</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_af718b0d906d8520bb2577eed20b4003a"><div class="ttname"><a href="classpy_1_1obj.html#af718b0d906d8520bb2577eed20b4003a">py::obj::to_str</a></div><div class="ttdeci">obj to_str() const </div><div class="ttdoc">str. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00542">py.hpp:542</a></div></div>
-<div class="ttc" id="classpy_1_1obj_html_a6312a190f29a962c5911366d3580c229"><div class="ttname"><a href="classpy_1_1obj.html#a6312a190f29a962c5911366d3580c229">py::obj::has</a></div><div class="ttdeci">bool has(const obj &amp;x) const </div><div class="ttdoc">&amp;#39;in&amp;#39; as &amp;#39;has&amp;#39;. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00640">py.hpp:640</a></div></div>
+<div class="ttc" id="classpy_1_1obj_html_a6312a190f29a962c5911366d3580c229"><div class="ttname"><a href="classpy_1_1obj.html#a6312a190f29a962c5911366d3580c229">py::obj::has</a></div><div class="ttdeci">bool has(const obj &amp;x) const </div><div class="ttdoc">&amp;#39;in&amp;#39; as &amp;#39;has&amp;#39;. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00651">py.hpp:651</a></div></div>
 <div class="ttc" id="classpy_1_1list_html"><div class="ttname"><a href="classpy_1_1list.html">py::list</a></div><div class="ttdoc">py list. </div><div class="ttdef"><b>Definition:</b> <a href="__list_8hpp_source.html#l00005">_list.hpp:5</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_acbdde88b00de49f888aa0d2e45b959fd"><div class="ttname"><a href="classpy_1_1obj.html#acbdde88b00de49f888aa0d2e45b959fd">py::obj::set_attr</a></div><div class="ttdeci">void set_attr(const obj &amp;a, const obj &amp;v)</div><div class="ttdoc">set attr. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00394">py.hpp:394</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html_a851c8a3ff652a9ff113394e83317686e"><div class="ttname"><a href="classpy_1_1obj.html#a851c8a3ff652a9ff113394e83317686e">py::obj::obj</a></div><div class="ttdeci">obj(double v)</div><div class="ttdoc">double ctor. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00262">py.hpp:262</a></div></div>
@@ -930,7 +941,7 @@ $(document).ready(function(){initNavTree('py_8hpp_source.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_f96b99d71f473a2994ecb4a8081a1379.html">py11</a></li><li class="navelem"><b>py.hpp</b></li>
-    <li class="footer">Generated on Wed Dec 25 2013 02:46:27 for Py11 by
+    <li class="footer">Generated on Wed Dec 25 2013 18:20:59 for Py11 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.5 </li>
   </ul>

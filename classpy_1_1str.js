@@ -3,6 +3,8 @@ var classpy_1_1str =
     [ "str", "classpy_1_1str.html#a3d0b68c9b587b64c6fb7db01566132e0", null ],
     [ "str", "classpy_1_1str.html#ab02f4445e4cf003cafcf0570930a20ef", null ],
     [ "str", "classpy_1_1str.html#a30eed59d62dacbb0bf5e2cf305d47503", null ],
+    [ "str", "classpy_1_1str.html#a6677d78c66b0bb159ce3b6f5f0d3ba92", null ],
+    [ "str", "classpy_1_1str.html#a621d547652dacd949938fbad163fa4c0", null ],
     [ "c_str", "classpy_1_1str.html#a7e1203a88906da19177b687d6b6d47b5", null ],
     [ "decode", "classpy_1_1str.html#aa711d00b55fbc53bfe0e24f0ecc74588", null ],
     [ "encode", "classpy_1_1str.html#a5b565f776fa87152787025f9209b67b7", null ],

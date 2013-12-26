@@ -25,7 +25,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Py11
-   &#160;<span id="projectnumber">v0.1</span>
+   &#160;<span id="projectnumber">v0.2</span>
    </div>
    <div id="projectbrief">This is a minimalist Python wrapper for C++11.</div>
   </td>
@@ -71,13 +71,61 @@ Introduction</h1>
 <p>The git repository is at <a href="https://github.com/LenxWei/py11">https://github.com/LenxWei/py11</a>.</p>
 <h1><a class="anchor" id="install"></a>
 Install</h1>
-<p>Need a compiler supporting c++11, such as gcc 4.7, clang 3.2 or higher.<br/>
-</p>
-<p>Py11 is a pure header library. To install it, just copy the dir include/py11 to system include dir.</p>
-<h1><a class="anchor" id="Documents"></a>
+<p>Py11 is a pure header library. To install it, just copy the directory include/py11 to system include directory.</p>
+<h1><a class="anchor" id="compile"></a>
+Compile</h1>
+<p>Need a compiler supporting C++11, such as gcc 4.7, clang 3.2 or higher.<br/>
+ Make sure to include correct Python header files and link correct Python libraries. For example:<br/>
+ </p>
+<pre>
+export CFLAGS="-I/usr/include/python2.7 -std=c++11"
+export LDFLAGS=-lpython2.7
+</pre><h1><a class="anchor" id="doc"></a>
 Documents</h1>
-<p>You can find documents about wrapper classes <a href="hierarchy.html">here</a>, and python utils <a href="modules.html">here</a>. </p>
-<hr/>
+<p>You can find documents about wrapper classes <a href="hierarchy.html">here</a>, and Python utils <a href="modules.html">here</a>.</p>
+<h1><a class="anchor" id="ex1"></a>
+Examples</h1>
+<p>Here is the py11 implementation of <a href="http://docs.python.org/2/extending/embedding.html#pure-embedding">the original call example</a>. </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;py11/py.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[])</div>
+<div class="line">{</div>
+<div class="line">    <a class="code" href="classpy_1_1obj.html">py::obj</a> module, func, value;</div>
+<div class="line">    <a class="code" href="classpy_1_1list.html">py::list</a> args;</div>
+<div class="line"></div>
+<div class="line">    <span class="keywordflow">try</span>{</div>
+<div class="line">        <span class="keywordflow">if</span> (argc &lt; 3) {</div>
+<div class="line">            cerr &lt;&lt; <span class="stringliteral">&quot;Usage: call pythonfile funcname [args]\n&quot;</span>;</div>
+<div class="line">            <span class="keywordflow">return</span> 1;</div>
+<div class="line">        }</div>
+<div class="line"></div>
+<div class="line">        <span class="comment">// for setting sys.path</span></div>
+<div class="line">        <a class="code" href="group__utils.html#gac33aefa42c7d6bc453f77f393cd68cc5">py::set_arg</a>(argc, argv);</div>
+<div class="line"></div>
+<div class="line">        module = <a class="code" href="group__utils.html#gaf82290cb9c69053e2b95812dbf3cb406">py::import</a>(argv[1]); <span class="comment">// throw exception if failed</span></div>
+<div class="line"></div>
+<div class="line">        func = module.<a class="code" href="classpy_1_1obj.html#a4e5d3ff3f1047daa9038b9349077bf25">attr</a>(argv[2]); <span class="comment">// throw exception if not found</span></div>
+<div class="line"></div>
+<div class="line">        args = {};</div>
+<div class="line">        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; argc - 3; ++i) {</div>
+<div class="line">            args.<a class="code" href="classpy_1_1list.html#ab3f7ab6fcd50e0f3f50b0d54f18699ca">append</a>(atoi(argv[i + 3]));</div>
+<div class="line">        }</div>
+<div class="line"></div>
+<div class="line">        value = func.<a class="code" href="classpy_1_1obj.html#ae6301181d8ce7e2f723aeebe291364af">call</a>(args.<a class="code" href="classpy_1_1list.html#a3c250af15c9d6c5882c9a28553aa04cd">to_tuple</a>()); <span class="comment">// throw exception if failed</span></div>
+<div class="line"></div>
+<div class="line">        printf(<span class="stringliteral">&quot;Result of call: %ld\n&quot;</span>, value.<a class="code" href="classpy_1_1obj.html#a25da9d0bfd58c2c69c9a5d205a56535e">as_long</a>());</div>
+<div class="line">        <span class="keywordflow">return</span> 0;</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">catch</span>(<span class="keyword">const</span> <a class="code" href="classpy_1_1err.html">py::err</a>&amp; e){</div>
+<div class="line">        cerr &lt;&lt; e.what() &lt;&lt; endl;</div>
+<div class="line">        <a class="code" href="group__utils.html#ga6c9e95c6fff10bbc3fe02f87b2bdaa73">py::print_err</a>();</div>
+<div class="line">        <span class="keywordflow">return</span> 1;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><hr/>
  <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd><p class="startdd">add tutorial </p>
 <p class="enddd">add exception handling</p>
 </dd></dl>
@@ -86,7 +134,7 @@ Documents</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Dec 25 2013 02:46:27 for Py11 by
+    <li class="footer">Generated on Wed Dec 25 2013 18:20:59 for Py11 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.5 </li>
   </ul>

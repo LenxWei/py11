@@ -25,7 +25,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Py11
-   &#160;<span id="projectnumber">v0.1</span>
+   &#160;<span id="projectnumber">v0.2</span>
    </div>
    <div id="projectbrief">This is a minimalist Python wrapper for C++11.</div>
   </td>
@@ -80,46 +80,45 @@ $(document).ready(function(){initNavTree('__sys_8hpp_source.html','');});
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment"> * @{</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment"> */</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">/** set the main prog for pylib</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"> * @param program_name usually use argv[0]</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="group__utils.html#ga7560cb5eadb59749035942b851e7fcfd">   15</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="group__utils.html#ga7560cb5eadb59749035942b851e7fcfd">set_prog</a>(<span class="keywordtype">char</span>* program_name = NULL)</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keywordflow">if</span>(program_name){</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        Py_SetProgramName(program_name);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    }</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;}</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">/** py print err to stderr.</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment"> * print python&#39;s error message and stack information.</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="group__utils.html#ga6c9e95c6fff10bbc3fe02f87b2bdaa73">   25</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="group__utils.html#ga6c9e95c6fff10bbc3fe02f87b2bdaa73">print_err</a>(<span class="keywordtype">int</span> set_sys_last_vars=1)</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;{</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordflow">if</span>(PyErr_Occurred())</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        PyErr_PrintEx(set_sys_last_vars);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">/** py import.</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment"> * @throw val_err</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="group__utils.html#gaf82290cb9c69053e2b95812dbf3cb406">   34</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="classpy_1_1obj.html">obj</a> <span class="keyword">import</span>(<span class="keyword">const</span> <span class="keywordtype">char</span>* module_name)</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;{</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">static</span> details::py_initer_wrap __init;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    PyObject* p = PyImport_ImportModule(module_name);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordflow">if</span>(p == NULL)</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordflow">throw</span> <a class="code" href="classpy_1_1val__err.html">val_err</a>(<span class="stringliteral">&quot;py import () failed&quot;</span>);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordflow">return</span> p;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">/**</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment"> * @}</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;}; <span class="comment">// ns py</span></div>
-<div class="ttc" id="group__utils_html_ga6c9e95c6fff10bbc3fe02f87b2bdaa73"><div class="ttname"><a href="group__utils.html#ga6c9e95c6fff10bbc3fe02f87b2bdaa73">py::print_err</a></div><div class="ttdeci">void print_err(int set_sys_last_vars=1)</div><div class="ttdoc">py print err to stderr. </div><div class="ttdef"><b>Definition:</b> <a href="__sys_8hpp_source.html#l00025">_sys.hpp:25</a></div></div>
-<div class="ttc" id="group__utils_html_ga7560cb5eadb59749035942b851e7fcfd"><div class="ttname"><a href="group__utils.html#ga7560cb5eadb59749035942b851e7fcfd">py::set_prog</a></div><div class="ttdeci">void set_prog(char *program_name=NULL)</div><div class="ttdoc">set the main prog for pylib </div><div class="ttdef"><b>Definition:</b> <a href="__sys_8hpp_source.html#l00015">_sys.hpp:15</a></div></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">/** pass the args to set the correct sys.path in python</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="group__utils.html#gac33aefa42c7d6bc453f77f393cd68cc5">   14</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="group__utils.html#gac33aefa42c7d6bc453f77f393cd68cc5">set_arg</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[])</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">static</span> details::py_initer_wrap __init;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    PySys_SetArgv(argc, argv);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;}</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">/** py print err to stderr.</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment"> * print python&#39;s error message and stack information.</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="group__utils.html#ga6c9e95c6fff10bbc3fe02f87b2bdaa73">   24</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="group__utils.html#ga6c9e95c6fff10bbc3fe02f87b2bdaa73">print_err</a>(<span class="keywordtype">int</span> set_sys_last_vars=1)</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;{</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordflow">if</span>(PyErr_Occurred())</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        PyErr_PrintEx(set_sys_last_vars);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">/** py import.</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment"> * @throw val_err</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="group__utils.html#gaf82290cb9c69053e2b95812dbf3cb406">   33</a></span>&#160;<span class="keyword">inline</span> <a class="code" href="classpy_1_1obj.html">obj</a> <span class="keyword">import</span>(<span class="keyword">const</span> <span class="keywordtype">char</span>* module_name)</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;{</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">static</span> details::py_initer_wrap __init;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    PyObject* p = PyImport_ImportModule(module_name);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordflow">if</span>(p == NULL)</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keywordflow">throw</span> <a class="code" href="classpy_1_1val__err.html">val_err</a>(<span class="stringliteral">&quot;py import () failed&quot;</span>);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">return</span> p;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">/**</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment"> * @}</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}; <span class="comment">// ns py</span></div>
+<div class="ttc" id="group__utils_html_ga6c9e95c6fff10bbc3fe02f87b2bdaa73"><div class="ttname"><a href="group__utils.html#ga6c9e95c6fff10bbc3fe02f87b2bdaa73">py::print_err</a></div><div class="ttdeci">void print_err(int set_sys_last_vars=1)</div><div class="ttdoc">py print err to stderr. </div><div class="ttdef"><b>Definition:</b> <a href="__sys_8hpp_source.html#l00024">_sys.hpp:24</a></div></div>
 <div class="ttc" id="classpy_1_1obj_html"><div class="ttname"><a href="classpy_1_1obj.html">py::obj</a></div><div class="ttdoc">wrapper of PyObject. </div><div class="ttdef"><b>Definition:</b> <a href="py_8hpp_source.html#l00069">py.hpp:69</a></div></div>
+<div class="ttc" id="group__utils_html_gac33aefa42c7d6bc453f77f393cd68cc5"><div class="ttname"><a href="group__utils.html#gac33aefa42c7d6bc453f77f393cd68cc5">py::set_arg</a></div><div class="ttdeci">void set_arg(int argc, char *argv[])</div><div class="ttdoc">pass the args to set the correct sys.path in python </div><div class="ttdef"><b>Definition:</b> <a href="__sys_8hpp_source.html#l00014">_sys.hpp:14</a></div></div>
 <div class="ttc" id="classpy_1_1val__err_html"><div class="ttname"><a href="classpy_1_1val__err.html">py::val_err</a></div><div class="ttdoc">exception: val_err. </div><div class="ttdef"><b>Definition:</b> <a href="__err_8hpp_source.html#l00043">_err.hpp:43</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -127,7 +126,7 @@ $(document).ready(function(){initNavTree('__sys_8hpp_source.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_f96b99d71f473a2994ecb4a8081a1379.html">py11</a></li><li class="navelem"><b>_sys.hpp</b></li>
-    <li class="footer">Generated on Wed Dec 25 2013 02:46:27 for Py11 by
+    <li class="footer">Generated on Wed Dec 25 2013 18:20:59 for Py11 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.5 </li>
   </ul>

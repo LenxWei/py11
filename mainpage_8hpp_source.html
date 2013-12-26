@@ -25,7 +25,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Py11
-   &#160;<span id="projectnumber">v0.1</span>
+   &#160;<span id="projectnumber">v0.2</span>
    </div>
    <div id="projectbrief">This is a minimalist Python wrapper for C++11.</div>
   </td>
@@ -80,27 +80,41 @@ $(document).ready(function(){initNavTree('mainpage_8hpp_source.html','');});
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">*</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">* @section install Install</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">*</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">* Need a compiler supporting c++11, such as gcc 4.7, clang 3.2 or higher.&lt;br&gt;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">* Py11 is a pure header library. To install it, just copy the directory include/py11 to system include directory.</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">*</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">* Py11 is a pure header library. To install it, just copy the dir include/py11 to system include dir.</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">* @section compile Compile</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">*</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">* @section Documents</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">* You can find documents about wrapper classes &lt;a href=&quot;hierarchy.html&quot;&gt;here&lt;/a&gt;, and python utils &lt;a href=&quot;modules.html&quot;&gt;here&lt;/a&gt;.</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">* &lt;hr&gt;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">* @todo add tutorial</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">* @todo add exception handling</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">*</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">* @defgroup utils Python utils</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">* Utility functoins.</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">*</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">* Need a compiler supporting C++11, such as gcc 4.7, clang 3.2 or higher.&lt;br&gt;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">* Make sure to include correct Python header files and link correct Python libraries.</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">* For example:&lt;br&gt;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">* &lt;pre&gt;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">* export CFLAGS=&quot;-I/usr/include/python2.7 -std=c++11&quot;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">* export LDFLAGS=-lpython2.7</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">* &lt;/pre&gt;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">* @section doc Documents</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">* You can find documents about wrapper classes &lt;a href=&quot;hierarchy.html&quot;&gt;here&lt;/a&gt;,</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">* and Python utils &lt;a href=&quot;modules.html&quot;&gt;here&lt;/a&gt;.</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">* @section ex1 Examples</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">* Here is the py11 implementation of &lt;a href=&quot;http://docs.python.org/2/extending/embedding.html#pure-embedding&quot;&gt;the original call example&lt;/a&gt;.</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">* \include call_py11.cpp</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">* &lt;hr&gt;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">* @todo add tutorial</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">* @todo add exception handling</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">* @defgroup utils Python utils</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">* Utility functoins.</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">*</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">*/</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><b>mainpage.hpp</b></li>
-    <li class="footer">Generated on Wed Dec 25 2013 02:46:27 for Py11 by
+    <li class="footer">Generated on Wed Dec 25 2013 18:20:59 for Py11 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.5 </li>
   </ul>

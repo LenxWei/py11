@@ -25,7 +25,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">Py11
-   &#160;<span id="projectnumber">v0.1</span>
+   &#160;<span id="projectnumber">v0.2</span>
    </div>
    <div id="projectbrief">This is a minimalist Python wrapper for C++11.</div>
   </td>
@@ -72,9 +72,10 @@ $(document).ready(function(){initNavTree('group__utils.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga7560cb5eadb59749035942b851e7fcfd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__utils.html#ga7560cb5eadb59749035942b851e7fcfd">py::set_prog</a> (char *program_name=NULL)</td></tr>
-<tr class="memdesc:ga7560cb5eadb59749035942b851e7fcfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the main prog for pylib  <a href="#ga7560cb5eadb59749035942b851e7fcfd">More...</a><br/></td></tr>
-<tr class="separator:ga7560cb5eadb59749035942b851e7fcfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac33aefa42c7d6bc453f77f393cd68cc5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac33aefa42c7d6bc453f77f393cd68cc5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__utils.html#gac33aefa42c7d6bc453f77f393cd68cc5">py::set_arg</a> (int argc, char *argv[])</td></tr>
+<tr class="memdesc:gac33aefa42c7d6bc453f77f393cd68cc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">pass the args to set the correct sys.path in python <br/></td></tr>
+<tr class="separator:gac33aefa42c7d6bc453f77f393cd68cc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6c9e95c6fff10bbc3fe02f87b2bdaa73"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__utils.html#ga6c9e95c6fff10bbc3fe02f87b2bdaa73">py::print_err</a> (int set_sys_last_vars=1)</td></tr>
 <tr class="memdesc:ga6c9e95c6fff10bbc3fe02f87b2bdaa73"><td class="mdescLeft">&#160;</td><td class="mdescRight">py print err to stderr.  <a href="#ga6c9e95c6fff10bbc3fe02f87b2bdaa73">More...</a><br/></td></tr>
 <tr class="separator:ga6c9e95c6fff10bbc3fe02f87b2bdaa73"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -115,7 +116,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="__sys_8hpp_source.html#l00034">34</a> of file <a class="el" href="__sys_8hpp_source.html">_sys.hpp</a>.</p>
+<p>Definition at line <a class="el" href="__sys_8hpp_source.html#l00033">33</a> of file <a class="el" href="__sys_8hpp_source.html">_sys.hpp</a>.</p>
 
 </div>
 </div>
@@ -144,41 +145,7 @@ Functions</h2></td></tr>
 <p>py print err to stderr. </p>
 <p>print python's error message and stack information. </p>
 
-<p>Definition at line <a class="el" href="__sys_8hpp_source.html#l00025">25</a> of file <a class="el" href="__sys_8hpp_source.html">_sys.hpp</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ga7560cb5eadb59749035942b851e7fcfd"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void py::set_prog </td>
-          <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>program_name</em> = <code>NULL</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>set the main prog for pylib </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">program_name</td><td>usually use argv[0] </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="__sys_8hpp_source.html#l00015">15</a> of file <a class="el" href="__sys_8hpp_source.html">_sys.hpp</a>.</p>
+<p>Definition at line <a class="el" href="__sys_8hpp_source.html#l00024">24</a> of file <a class="el" href="__sys_8hpp_source.html">_sys.hpp</a>.</p>
 
 </div>
 </div>
@@ -187,7 +154,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Dec 25 2013 02:46:27 for Py11 by
+    <li class="footer">Generated on Wed Dec 25 2013 18:20:59 for Py11 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.5 </li>
   </ul>
