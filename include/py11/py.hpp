@@ -214,20 +214,20 @@ public:
     
     /** test null.
      */
-    bool is_null()const
+    bool operator !()const
     {
-        return _p == NULL;
+        return !_p;
     }
     
     // cast
     
-    /** is false
+    /**
      */    
-    bool operator !()const
+    bool py_not()const
     {
         return (!_p) || PyObject_Not(_p);
     }
-    
+
     /** int.
      */
     obj(int i):_p(PyInt_FromLong(i))
@@ -326,7 +326,7 @@ public:
      */
     bool is_a(const obj& t)const
     {
-        if(t.is_null())
+        if(!t)
             throw type_err("is_a with null type");
             
         int r = PyObject_TypeCheck(_p, t._p->ob_type);
@@ -596,7 +596,18 @@ public:
         return r;
     }
 
-    /** call with key/value pairs.
+    /** call with args.
+     * @throw type_err
+     */
+    obj call(const obj& args)const
+    {
+        PyObject* r = PyObject_CallObject(_p, args._p);
+        if(r == NULL)
+            throw type_err("call failed");
+        return r;
+    }
+
+    /** call with args, and key/value pairs.
      * @throw type_err
      */
     obj call(const obj& args, const obj& kw)const

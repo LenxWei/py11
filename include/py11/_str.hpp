@@ -76,7 +76,7 @@ public:
         return *this;
     }
 
-    /** ctor.
+    /** ctor from char*.
      */
     str(const char* s)
     {
@@ -88,6 +88,8 @@ public:
         throw val_err("str failed");
     }
 
+    /** ctor from char* with length.
+     */
     str(const char* s, Py_ssize_t len)
     {
         _p = PyString_FromStringAndSize(s, len);
@@ -96,6 +98,18 @@ public:
         throw val_err("str failed");
     }
     
+    /** ctor from format
+     */
+    str(const char* fmt, const obj& o)
+    {
+        if(fmt){
+            _p = PyString_Format(obj(fmt).p(), o.p());
+            if(_p)
+                return;
+        }
+        throw val_err("str failed");
+    }
+
     /** =
      */
     str& operator = (const char* s)

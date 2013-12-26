@@ -12,11 +12,11 @@ namespace py{
 /** set the main prog for pylib
  * @param program_name usually use argv[0]
  */
-inline void set_prog(char* program_name = NULL)
+inline void set_arg(int argc, char *argv[])
 {
-    if(program_name){
-        Py_SetProgramName(program_name);
-    }
+	static details::py_initer_wrap __init;
+
+	PySys_SetArgv(argc, argv);
 }
 
 /** py print err to stderr.
@@ -36,6 +36,19 @@ inline obj import(const char* module_name)
 	static details::py_initer_wrap __init;
 
     PyObject* p = PyImport_ImportModule(module_name);
+    if(p == NULL)
+        throw val_err("py import () failed");
+    return p;
+}
+
+/** py import.
+ * @throw val_err
+ */
+inline obj import(const obj& module_name)
+{
+	static details::py_initer_wrap __init;
+
+    PyObject* p = PyImport_Import(module_name.p());
     if(p == NULL)
         throw val_err("py import () failed");
     return p;

@@ -3,7 +3,7 @@
 * @authors <a href="http://lenx.100871.net">Lenx Tao Wei</a> (lenx.wei at gmail.com)
 *
 * @section intro Introduction
-* Py11 is a minimalist python wrapper for c++11, and makes it much easier to call python libraries from c++11.
+* Py11 is a minimalist Python wrapper for C++11, and makes it much easier to call Python libraries from C++11.
 *
 * The git repository is at https://github.com/LenxWei/py11.
 *

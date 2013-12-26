@@ -214,7 +214,7 @@ public:
      */
     void update(const dict& b)
     {
-        if(_p && !b.is_null()){
+        if(_p && !!b){
             int r = PyDict_Update(_p, b.p());
             if(r != -1)
                 return;

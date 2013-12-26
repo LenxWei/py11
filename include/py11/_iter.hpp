@@ -16,7 +16,7 @@ public:
      */
     iter(const obj& o):_it(PyObject_GetIter(o.p())), _fin(false)
     {
-        if(_it.is_null())
+        if(!_it)
             throw type_err("iter ctor failed");
         ++(*this);
     }
@@ -26,7 +26,7 @@ public:
     iter& operator++()
     {
         _v = obj(PyIter_Next(_it.p()));
-        if(_v.is_null())
+        if(!_v)
             _fin = true;
         return *this;
     }
