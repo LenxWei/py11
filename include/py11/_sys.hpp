@@ -9,8 +9,7 @@ namespace py{
  * @{
  */
 
-/** set the main prog for pylib
- * @param program_name usually use argv[0]
+/** pass the args to set the correct sys.path in python
  */
 inline void set_arg(int argc, char *argv[])
 {
@@ -36,19 +35,6 @@ inline obj import(const char* module_name)
 	static details::py_initer_wrap __init;
 
     PyObject* p = PyImport_ImportModule(module_name);
-    if(p == NULL)
-        throw val_err("py import () failed");
-    return p;
-}
-
-/** py import.
- * @throw val_err
- */
-inline obj import(const obj& module_name)
-{
-	static details::py_initer_wrap __init;
-
-    PyObject* p = PyImport_Import(module_name.p());
     if(p == NULL)
         throw val_err("py import () failed");
     return p;

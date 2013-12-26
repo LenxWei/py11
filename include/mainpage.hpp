@@ -9,12 +9,26 @@
 *
 * @section install Install
 *
-* Need a compiler supporting c++11, such as gcc 4.7, clang 3.2 or higher.<br>
+* Py11 is a pure header library. To install it, just copy the directory include/py11 to system include directory.
 *
-* Py11 is a pure header library. To install it, just copy the dir include/py11 to system include dir.
+* @section compile Compile
 *
-* @section Documents
-* You can find documents about wrapper classes <a href="hierarchy.html">here</a>, and python utils <a href="modules.html">here</a>.
+* Need a compiler supporting C++11, such as gcc 4.7, clang 3.2 or higher.<br>
+* Make sure to include correct Python header files and link correct Python libraries.
+* For example:<br>
+* <pre>
+* export CFLAGS="-I/usr/include/python2.7 -std=c++11"
+* export LDFLAGS=-lpython2.7
+* </pre>
+*
+* @section doc Documents
+* You can find documents about wrapper classes <a href="hierarchy.html">here</a>,
+* and Python utils <a href="modules.html">here</a>.
+*
+* @section ex1 Examples
+* Here is the py11 implementation of <a href="http://docs.python.org/2/extending/embedding.html#pure-embedding">the original call example</a>.
+* \include call_py11.cpp
+*
 * <hr>
 * @todo add tutorial
 * @todo add exception handling
