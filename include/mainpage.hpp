@@ -32,6 +32,9 @@
 * <hr>
 * @todo add tutorial
 * @todo add exception handling
+* @todo add python init test, to co-exist with python for extending
+* @todo add python function extending support
+* @todo check co-existance with boost.python
 *
 * @defgroup utils Python utils
 * Utility functoins.
